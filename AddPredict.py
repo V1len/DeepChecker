@@ -47,7 +47,7 @@ if __name__ == '__main__':
                     print("no suitable checker")
             data[index].append(data[index][point])
             statistic_dic[method_list[point - 1]] += 1
-        print(statistic_dic)
+        # print(statistic_dic)
 
     for index in range(len(data)):
         target_method_list = predict[test_name_list[index]]
@@ -72,30 +72,6 @@ if __name__ == '__main__':
         else:
             data[index].append("timeout")
 
-    # for index in range(len(data)):
-    #     target_method_list = predict[test_name_list[index]]
-    #     predict_time = "timeout"
-    #     random_list = [0, 1, 2, 3]
-    #     random_list = random.sample(random_list, 2)
-    #     point = 0
-    #     for i in range(sum_method_number):
-    #         target_method = target_method_list[i]
-    #         if target_method in method_list:
-    #             temp_point = method_list.index(target_method) + 1
-    #             temp_time = data[index][temp_point]
-    #             if temp_time != "timeout" and temp_time != "failed":
-    #                 if predict_time == "timeout":
-    #                     predict_time = temp_time
-    #                     point = temp_point
-    #                 elif float(temp_time) < float(predict_time):
-    #                     predict_time = temp_time
-    #                     point = temp_point
-    #         else:
-    #             print("no suitable checker")
-    #     if point != 0:
-    #         data[index].append(data[index][point])
-    #     else:
-    #         data[index].append("timeout")
 
     title = "filename"
     for method in method_list:

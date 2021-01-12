@@ -1,4 +1,5 @@
 import json
+import pickle
 
 
 method_list = ["dprove", "pdr", "iimc", "IC3"]
@@ -7,7 +8,7 @@ method_list = ["dprove", "pdr", "iimc", "IC3"]
 choose_top_method_number = 1
 sum_method_number = len(method_list)
 
-date = "2021-1-11"
+date = "2021-1-12"
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
 
 # AVY_dprove_path = "/mnt/hd0/DeepChecker/dataset/2021-1-6/AVY_dprove_clean.json"
@@ -28,6 +29,14 @@ def ReadJson(json_path):
         load_json = json.load(load_f)
         load_f.close()
     return load_json
+
+def Save_pkl(obj, pkl_name):
+    with open(pkl_name, 'wb') as f:
+        pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+
+def Load_pkl(pkl_name):
+    with open(pkl_name, 'rb') as f:
+        return pickle.load(f)
 
 def InitialDic():
     statistic_dic = {}
