@@ -12,7 +12,7 @@ def GenerateLabel(data_path, name_list_path, label_dic_path):
         method = "None"
         time = float(sys.maxsize)
         for index in range(len(utils.method_list)):
-            if line[index + 1] != "timeout" and line[index + 1] != "failed" and float(line[index + 1]) < time:
+            if line[index + 1] != "timeout" and line[index + 1] != "failed" and line[index + 1] != "0.0" and float(line[index + 1]) < time:
                 time = float(line[index + 1])
                 method = utils.method_list[index]
         if method != "None":

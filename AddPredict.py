@@ -30,22 +30,20 @@ if __name__ == '__main__':
             point = 0
             for i in range(choose_top_method_number):
                 target_method = target_method_list[i]
-                if target_method in method_list:
-                    temp_point = method_list.index(target_method) + 1
-                    temp_time = data[index][temp_point]
-                    if predict_time == "None":
+                assert(target_method in method_list)
+                temp_point = method_list.index(target_method) + 1
+                temp_time = data[index][temp_point]
+                if predict_time == "None":
+                    predict_time = temp_time
+                    point = temp_point
+                elif temp_time != "timeout" and temp_time != "failed" and temp_time != "0.0":
+                    if predict_time == "timeout" or predict_time == "failed" or predict_time == "0.0":
                         predict_time = temp_time
                         point = temp_point
-                    elif temp_time != "timeout" and temp_time != "failed":
-                        if predict_time == "timeout" or predict_time == "failed":
-                            predict_time = temp_time
-                            point = temp_point
-                        elif float(temp_time) < float(predict_time):
-                            predict_time = temp_time
-                            point = temp_point
-                else:
-                    print("no suitable checker")
-            data[index].append(data[index][point])
+                    elif float(temp_time) < float(predict_time):
+                        predict_time = temp_time
+                        point = temp_point                
+            data[index].append(predict_time)
             statistic_dic[method_list[point - 1]] += 1
         # print(statistic_dic)
 
@@ -58,7 +56,7 @@ if __name__ == '__main__':
             if target_method in method_list:
                 temp_point = method_list.index(target_method) + 1
                 temp_time = data[index][temp_point]
-                if temp_time != "timeout" and temp_time != "failed":
+                if temp_time != "timeout" and temp_time != "failed" and temp_time != "0.0":
                     if predict_time == "timeout":
                         predict_time = temp_time
                         point = temp_point
@@ -67,16 +65,15 @@ if __name__ == '__main__':
                         point = temp_point
             else:
                 print("no suitable checker")
-        if point != 0:
-            data[index].append(data[index][point])
-        else:
-            data[index].append("timeout")
-
+        data[index].append(predict_time)
+        
 
     title = "filename"
     for method in method_list:
         title = title + "," + method
+    for DeepChecker in utils.DeepChecker_list:
+        title = title + "," + DeepChecker
     with open(predictdata_path, "w") as writer:
-        writer.write(title + ",DeepChecker\n")
+        writer.write(title + ",GroundTruth\n")
         for line in data:
             writer.write(",".join(line)+"\n")

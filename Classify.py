@@ -142,6 +142,7 @@ def Statistic(test_name_list, test_set_predict):
 
 if __name__ == '__main__':
     root_path = utils.root_path
+    use_all_methods = utils.use_all_methods
 
     embedding_date_0 = "2021-1-2_v0.1"
     embedding_date_1 = "2020-12-24_v1.1"
@@ -180,17 +181,14 @@ if __name__ == '__main__':
     # RandomForestTest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1)
     # RandomForestTest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2)
 
-    # RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0, model_path_0, max_depth=10, min_samples_split=2, min_samples_leaf=2)
-    # RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1, model_path_1, max_depth=10, min_samples_split=4, min_samples_leaf=2)
-    # RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2, model_path_2, max_depth=14, min_samples_split=4, min_samples_leaf=1)
-
-    # RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0, model_path_0, max_depth=1, min_samples_split=2, min_samples_leaf=1)
-    # RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1, model_path_1, max_depth=1, min_samples_split=2, min_samples_leaf=1)
-    # RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2, model_path_2, max_depth=1, min_samples_split=2, min_samples_leaf=1)
-
-    RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0, model_path_0, max_depth=5, min_samples_split=2, min_samples_leaf=1)
-    RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1, model_path_1, max_depth=5, min_samples_split=2, min_samples_leaf=1)
-    RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2, model_path_2, max_depth=5, min_samples_split=2, min_samples_leaf=1)
+    if use_all_methods:
+        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0, model_path_0, max_depth=1, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1, model_path_1, max_depth=1, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2, model_path_2, max_depth=5, min_samples_split=2, min_samples_leaf=1)
+    else:
+        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0, model_path_0, max_depth=3, min_samples_split=3, min_samples_leaf=1)
+        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1, model_path_1, max_depth=4, min_samples_split=3, min_samples_leaf=1)
+        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2, model_path_2, max_depth=None, min_samples_split=3, min_samples_leaf=1)
 
 
 

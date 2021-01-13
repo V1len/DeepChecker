@@ -1,21 +1,28 @@
 import json
 import pickle
 
+use_all_methods = False
+if use_all_methods:
+    method_list = ["dprove", "pdr", "iimc", "IC3"]
+else:
+    method_list = ["iimcbw", "iimcfw", "iimcic3", "iimcic3lr"]
 
-method_list = ["dprove", "pdr", "iimc", "IC3"]
-# method_list = ["iimcbw", "iimcfw", "iimcic3", "iimcic3lr", "iimcic3r"]
+DeepChecker_list = ["DeepChecker0", "DeepChecker1", "DeepChecker2"]
+
 
 choose_top_method_number = 1
 sum_method_number = len(method_list)
 
-date = "2021-1-12"
+date = "2021-1-13"
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
 
 # AVY_dprove_path = "/mnt/hd0/DeepChecker/dataset/2021-1-6/AVY_dprove_clean.json"
-AVY_dprove_path = "/mnt/hd0/DeepChecker/DataForNet/2021-1-10/data_clean.json"
-others_path = "/mnt/hd0/DeepChecker/dataset/2021-1-6/others.json"
+# AVY_dprove_path = "/mnt/hd0/DeepChecker/DataForNet/2021-1-10/data_clean.json"
+AVY_dprove_path = "/mnt/hd0/DeepChecker/dataset/2020-1-12/AVY_dprove_clean.json"
+pdr_IC3_path = "/mnt/hd0/DeepChecker/dataset/2020-1-12/pdr_IC3_clean.json"
+others_path = "/mnt/hd0/DeepChecker/dataset/2020-1-12/others.json"
+
 iimc_path = "/mnt/hd0/DeepChecker/dataset/2021-1-8/iimc_benchmark.json"
-# pdr_IC3_path = "/mnt/hd0/DeepChecker/dataset/2020-1-6/AVY_dprove_clean.json"
 new_format_json_path = "/mnt/hd0/DeepChecker/new_format.json"
 
 
