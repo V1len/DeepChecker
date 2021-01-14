@@ -9,9 +9,11 @@ if __name__ == '__main__':
     sum_method_number = utils.sum_method_number
 
     test_name_list_path = root_path + "test_name_list.json"
-    test_set_predict_path_0 = root_path + "test_set_predict_0.json"
-    test_set_predict_path_1 = root_path + "test_set_predict_1.json"
-    test_set_predict_path_2 = root_path + "test_set_predict_2.json"
+    
+    test_set_predict_path = root_path + "test_set_predict/"
+    test_set_predict_path_0 = test_set_predict_path + "test_set_predict_0.json"
+    test_set_predict_path_1 = test_set_predict_path + "test_set_predict_1.json"
+    test_set_predict_path_2 = test_set_predict_path + "test_set_predict_2.json"
 
     testdata_path = root_path + "test_data.csv"
     predictdata_path = root_path + "predict_data.csv"

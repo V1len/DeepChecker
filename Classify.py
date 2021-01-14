@@ -18,24 +18,6 @@ def GetLabelList(name_list, label_dic):
         label_list.append(label)
     return label_list
 
-def GetVecList(dir, name_list):
-    vec_list = []
-    for name in name_list:
-        aig_name = name + ".vector"
-        aig_path = os.path.join(dir, aig_name)
-        if os.path.isfile(aig_path):
-            vector = []
-            with open(aig_path, encoding='utf-8') as fp:
-                line = fp.readlines()[0].split("[")[1].split("]")[0]
-                items = line.split(", ")
-                for item in items:
-                    vector.append(int(item))
-                fp.close()
-            vec_list.append(vector)
-        else:
-            print(aig_name)
-    return vec_list 
-
 def GeneratePredictResult(test_name_list, predict_label_list, test_set_predict_path):
     test_set_predict = {}
     method_list = utils.method_list
@@ -68,8 +50,8 @@ def GetAcc(predict_label_list, test_label_list):
     return sum_acc
 
 def RandomForestTest(embedded_dir, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path):
-    X = GetVecList(embedded_dir, train_name_list)
-    test_X = GetVecList(embedded_dir, test_name_list)
+    X = utils.GetVecList(embedded_dir, train_name_list)
+    test_X = utils.GetVecList(embedded_dir, test_name_list)
     y = train_label_list
     test_y = test_label_list
 
@@ -112,17 +94,17 @@ def RandomForestTest(embedded_dir, train_name_list, test_name_list, train_label_
     
 
 
-def RandomForest(embedded_dir, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path, model_path, 
+def RandomForest(embedded_dir, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path, model_path, importance_path,
                                                                                     max_depth, min_samples_split=2, min_samples_leaf=1):
-    train_vec_list = GetVecList(embedded_dir, train_name_list)
-    test_vec_list = GetVecList(embedded_dir, test_name_list)
-
+    train_vec_list = utils.GetVecList(embedded_dir, train_name_list)
+    test_vec_list = utils.GetVecList(embedded_dir, test_name_list)
     model = RandomForestClassifier(n_estimators=100, criterion="entropy", max_depth=max_depth, min_samples_split=min_samples_split, min_samples_leaf=min_samples_leaf)
     classifier = model.fit(train_vec_list, train_label_list)
     utils.Save_pkl(classifier, model_path)
     predictions = classifier.predict_proba(test_vec_list)
-    predict_label_list = np.argsort(-predictions, axis=1) 
-    
+    predict_label_list = np.argsort(-predictions, axis=1)
+    importance = model.feature_importances_
+    utils.WriteJson(importance.tolist(), importance_path)
     sum_acc = GetAcc(predict_label_list, test_label_list)
     print(sum_acc)
 
@@ -144,16 +126,9 @@ if __name__ == '__main__':
     root_path = utils.root_path
     use_all_methods = utils.use_all_methods
 
-    embedding_date_0 = "2021-1-2_v0.1"
-    embedding_date_1 = "2020-12-24_v1.1"
-    embedding_date_2 = "2021-1-2_v2.2"
-    # embedding_date_0 = "2020-12-11_v0"
-    # embedding_date_1 = "2020-12-24_v1.1"
-    # embedding_date_2 = "2020-12-24_v2.1"
-
-    embedded_dir_0 = "/mnt/hd0/DeepChecker/embedding/embedded/" + embedding_date_0
-    embedded_dir_1 = "/mnt/hd0/DeepChecker/embedding/embedded/" + embedding_date_1
-    embedded_dir_2 = "/mnt/hd0/DeepChecker/embedding/embedded/" + embedding_date_2
+    embedded_dir_0 = utils.embedded_dir_0
+    embedded_dir_1 = utils.embedded_dir_1
+    embedded_dir_2 = utils.embedded_dir_2
 
     train_name_list_path = root_path + "train_name_list.json"
     train_label_dic_path = root_path + "train_label_dic.json"
@@ -168,46 +143,36 @@ if __name__ == '__main__':
     train_label_list = GetLabelList(train_name_list, train_label_dic)
     test_label_list = GetLabelList(test_name_list, test_label_dic)
 
-    test_set_predict_path_0 = root_path + "test_set_predict_0.json"
-    test_set_predict_path_1 = root_path + "test_set_predict_1.json"
-    test_set_predict_path_2 = root_path + "test_set_predict_2.json"
+    test_set_predict_path = root_path + "test_set_predict/"
+    test_set_predict_path_0 = test_set_predict_path + "test_set_predict_0.json"
+    test_set_predict_path_1 = test_set_predict_path + "test_set_predict_1.json"
+    test_set_predict_path_2 = test_set_predict_path + "test_set_predict_2.json"
 
-    model_path_0 = root_path + "model_0.pkl"
-    model_path_1 = root_path + "model_1.pkl"
-    model_path_2 = root_path + "model_2.pkl"
-
+    model_path = root_path + "model/"
+    model_path_0 = model_path + "model_0.pkl"
+    model_path_1 = model_path + "model_1.pkl"
+    model_path_2 = model_path + "model_2.pkl"
+    
+    importance_message_path = root_path + "importance_message/"
+    tools_importance_path_0 = importance_message_path + "tools_importance_0.json"
+    tools_importance_path_1 = importance_message_path + "tools_importance_1.json"
+    tools_importance_path_2 = importance_message_path + "tools_importance_2.json"
+    
+    iimc_importance_path_0 = importance_message_path + "iimc_importance_0.json"
+    iimc_importance_path_1 = importance_message_path + "iimc_importance_1.json"
+    iimc_importance_path_2 = importance_message_path + "iimc_importance_2.json"
 
     # RandomForestTest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0)
     # RandomForestTest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1)
     # RandomForestTest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2)
 
     if use_all_methods:
-        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0, model_path_0, max_depth=1, min_samples_split=2, min_samples_leaf=1)
-        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1, model_path_1, max_depth=1, min_samples_split=2, min_samples_leaf=1)
-        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2, model_path_2, max_depth=5, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0, model_path_0, tools_importance_path_0, max_depth=1, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1, model_path_1, tools_importance_path_1, max_depth=1, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2, model_path_2, tools_importance_path_2, max_depth=5, min_samples_split=2, min_samples_leaf=1)
     else:
-        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0, model_path_0, max_depth=3, min_samples_split=3, min_samples_leaf=1)
-        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1, model_path_1, max_depth=4, min_samples_split=3, min_samples_leaf=1)
-        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2, model_path_2, max_depth=None, min_samples_split=3, min_samples_leaf=1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0, model_path_0, iimc_importance_path_0, max_depth=3, min_samples_split=3, min_samples_leaf=1)
+        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1, model_path_1, iimc_importance_path_1, max_depth=4, min_samples_split=3, min_samples_leaf=1)
+        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2, model_path_2, iimc_importance_path_2, max_depth=None, min_samples_split=3, min_samples_leaf=1)
 
 

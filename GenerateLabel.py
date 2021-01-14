@@ -35,7 +35,24 @@ def Statistic(train_label_dic_path, test_label_dic_path):
     statistic_dic = utils.Statistic([train_label_dic, test_label_dic])
     print("all_data")
     print(statistic_dic)
+
+def StatisticSamples(test_label_dic_path, statistic_name_dic_path):
+    test_label_dic = utils.ReadJson(test_label_dic_path)
+    statistic_name_dic = {}
+    for method in utils.method_list:
+        statistic_name_dic[method] = []
+    for name in test_label_dic.keys():
+        statistic_name_dic[test_label_dic[name]].append(name)
+    utils.WriteJson(statistic_name_dic, statistic_name_dic_path)
     
+def JudgeSituation15(test_name_list_path):
+    test_name_list = utils.ReadJson(test_name_list_path)
+    for name in test_name_list:
+        vec = utils.GetVec(utils.embedded_dir_1, name)
+        if vec[14] != 0:
+            print(name)
+        
+
 
 
 if __name__ == '__main__':
@@ -48,9 +65,16 @@ if __name__ == '__main__':
     test_name_list_path = root_path + "test_name_list.json"
     test_label_dic_path = root_path + "test_label_dic.json"
 
+    statistic_name_dic_path = root_path + "statistic_name_dic.json"
+
     GenerateLabel(train_data_path, train_name_list_path, train_label_dic_path)
     GenerateLabel(test_data_path, test_name_list_path, test_label_dic_path)
 
     Statistic(train_label_dic_path, test_label_dic_path)
+
+    StatisticSamples(test_label_dic_path, statistic_name_dic_path)
+
+    JudgeSituation15(train_name_list_path)
+    JudgeSituation15(test_name_list_path)
 
 
