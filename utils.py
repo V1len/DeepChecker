@@ -2,7 +2,7 @@ import json
 import pickle
 import os
 
-use_all_methods = True
+use_all_methods = False
 if use_all_methods:
     method_list = ["dprove", "pdr", "iimc", "IC3"]
 else:
@@ -13,8 +13,30 @@ DeepChecker_list = ["DeepChecker0", "DeepChecker1", "DeepChecker2"]
 choose_top_method_number = 1
 sum_method_number = len(method_list)
 
-date = "2021-1-14"
+date = "2021-1-15"
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
+if use_all_methods:
+    basic_path = root_path + "tools/"
+else:
+    basic_path = root_path + "iimc/"
+
+if not os.path.exists(root_path):
+    os.mkdir(root_path)
+if not os.path.exists(basic_path):
+    os.mkdir(basic_path)
+classify_model_path = basic_path + "classify_model/"
+classify_predict_path = basic_path + "classify_predict/"
+time_model_path = basic_path + "time_model/"
+time_predict_path = basic_path + "time_predict/"
+importance_message_path = basic_path + "importance_message/"
+importance_fig_path = basic_path + "importance_figure/"
+statistic_sample_distribution_path = basic_path + "statistic_sample_distribution/"
+basic_data_path = basic_path + "basic_data/"
+path_list = [classify_model_path, classify_predict_path, time_model_path, time_predict_path, 
+    importance_message_path, importance_fig_path, statistic_sample_distribution_path, basic_data_path]
+for temp_path in path_list:
+    if not os.path.exists(temp_path):
+        os.mkdir(temp_path)
 
 # AVY_dprove_path = "/mnt/hd0/DeepChecker/dataset/2021-1-6/AVY_dprove_clean.json"
 # AVY_dprove_path = "/mnt/hd0/DeepChecker/DataForNet/2021-1-10/data_clean.json"

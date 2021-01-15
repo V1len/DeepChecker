@@ -143,20 +143,17 @@ def ProcessiimcData(iimc_path, data_path):
 
 
 if __name__ == '__main__':
-    root_path = utils.root_path
-
     AVY_dprove_path = utils.AVY_dprove_path
     pdr_IC3_path = utils.pdr_IC3_path
     others_path = utils.others_path
     iimc_path = utils.iimc_path
-    data_path = root_path + "data.csv"
 
-    use_all_methods = utils.use_all_methods
-    if use_all_methods:
+    data_path = utils.basic_data_path + "data.csv"
+
+    if utils.use_all_methods:
         NewProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path)
     else:
         ProcessiimcData(iimc_path, data_path)
-
 
     # ProcessData(others_path, data_path, AVY_dprove_path=AVY_dprove_path)
     # ProcessData(others_path, data_path)

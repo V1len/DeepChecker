@@ -3,25 +3,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    root_path = utils.root_path
+    basic_data_path = utils.basic_data_path
 
     embedded_dir_0 = utils.embedded_dir_0
     embedded_dir_1 = utils.embedded_dir_1
     embedded_dir_2 = utils.embedded_dir_2
 
-    statistic_name_dic_path = root_path + "statistic_name_dic.json"
+    statistic_name_dic_path = basic_data_path + "statistic_name_dic.json"
     statistic_name_dic = utils.ReadJson(statistic_name_dic_path)
 
-    statistic_sample_distribution_path = root_path + "statistic_sample_distribution/"
+    statistic_sample_distribution_path = utils.statistic_sample_distribution_path
 
-    if utils.use_all_methods == True:
-        statistic_sample_distribution_path_0 = statistic_sample_distribution_path + "tools_statistic_sample_distribution_0.pdf"
-        statistic_sample_distribution_path_1 = statistic_sample_distribution_path + "tools_statistic_sample_distribution_1.pdf"
-        statistic_sample_distribution_path_2 = statistic_sample_distribution_path + "tools_statistic_sample_distribution_2.pdf"
-    else:
-        statistic_sample_distribution_path_0 = statistic_sample_distribution_path + "iimc_statistic_sample_distribution_0.pdf"
-        statistic_sample_distribution_path_1 = statistic_sample_distribution_path + "iimc_statistic_sample_distribution_1.pdf"
-        statistic_sample_distribution_path_2 = statistic_sample_distribution_path + "iimc_statistic_sample_distribution_2.pdf"
+    statistic_sample_distribution_path_0 = statistic_sample_distribution_path + "statistic_sample_distribution_0.pdf"
+    statistic_sample_distribution_path_1 = statistic_sample_distribution_path + "statistic_sample_distribution_1.pdf"
+    statistic_sample_distribution_path_2 = statistic_sample_distribution_path + "statistic_sample_distribution_2.pdf"
+
 
     save_list = [statistic_sample_distribution_path_0, statistic_sample_distribution_path_1, statistic_sample_distribution_path_2]
     for i in range(3):
