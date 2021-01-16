@@ -2,7 +2,11 @@ import json
 import pickle
 import os
 
+<<<<<<< HEAD
 use_all_methods = True
+=======
+use_all_methods = False
+>>>>>>> 6d584c5a3dced798dab67ab69c8c123d0a71adae
 if use_all_methods:
     method_list = ["dprove", "pdr", "iimc", "IC3"]
 else:
@@ -13,7 +17,11 @@ DeepChecker_list = ["DeepChecker0", "DeepChecker1", "DeepChecker2"]
 choose_top_method_number = 1
 sum_method_number = len(method_list)
 
+<<<<<<< HEAD
 date = "2021-1-16-Test"
+=======
+date = "2021-1-15"
+>>>>>>> 6d584c5a3dced798dab67ab69c8c123d0a71adae
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
 if use_all_methods:
     basic_path = root_path + "tools/"

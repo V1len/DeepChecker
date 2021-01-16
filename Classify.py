@@ -18,16 +18,26 @@ def GetLabelList(name_list, label_dic):
         label_list.append(label)
     return label_list
 
+<<<<<<< HEAD
 def GeneratePredictResult(test_name_list, predict_label_list, classify_predict_path):
     classify_predict = {}
+=======
+def GeneratePredictResult(test_name_list, predict_label_list, test_set_predict_path):
+    test_set_predict = {}
+>>>>>>> 6d584c5a3dced798dab67ab69c8c123d0a71adae
     method_list = utils.method_list
     for i in range(len(test_name_list)):
         test_name = test_name_list[i]
         temp_predict = []
         for predict in predict_label_list[i]:
             temp_predict.append(method_list[predict])
+<<<<<<< HEAD
         classify_predict[test_name] = temp_predict
     utils.WriteJson(classify_predict, classify_predict_path)
+=======
+        test_set_predict[test_name] = temp_predict
+    utils.WriteJson(test_set_predict, test_set_predict_path)
+>>>>>>> 6d584c5a3dced798dab67ab69c8c123d0a71adae
 
     method_list = utils.method_list
     choose_top_method_number = utils.choose_top_method_number
@@ -35,11 +45,19 @@ def GeneratePredictResult(test_name_list, predict_label_list, classify_predict_p
         top_i_method_dic = {}
         for j in range(len(test_name_list)):
             test_name = test_name_list[j]
+<<<<<<< HEAD
             top_i_method_dic[test_name] = classify_predict[test_name][i]
         statistic_dic = utils.Statistic([top_i_method_dic])
         print(statistic_dic)
 
     return classify_predict
+=======
+            top_i_method_dic[test_name] = test_set_predict[test_name][i]
+        statistic_dic = utils.Statistic([top_i_method_dic])
+        print(statistic_dic)
+
+    return test_set_predict
+>>>>>>> 6d584c5a3dced798dab67ab69c8c123d0a71adae
 
 def GetAcc(predict_label_list, test_label_list):
     choose_top_method_number = utils.choose_top_method_number
@@ -94,7 +112,11 @@ def RandomForestTest(embedded_dir, train_name_list, test_name_list, train_label_
     
 
 
+<<<<<<< HEAD
 def RandomForest(embedded_dir, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path, model_path, importance_path,
+=======
+def RandomForest(embedded_dir, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path, model_path, importance_path,
+>>>>>>> 6d584c5a3dced798dab67ab69c8c123d0a71adae
                                                                                     max_depth, min_samples_split=2, min_samples_leaf=1):
     train_vec_list = utils.GetVecList(embedded_dir, train_name_list)
     test_vec_list = utils.GetVecList(embedded_dir, test_name_list)
@@ -108,15 +130,26 @@ def RandomForest(embedded_dir, train_name_list, test_name_list, train_label_list
     sum_acc = GetAcc(predict_label_list, test_label_list)
     print(sum_acc)
 
+<<<<<<< HEAD
     classify_predict = GeneratePredictResult(test_name_list, predict_label_list, classify_predict_path)
     Statistic(test_name_list, classify_predict)
 
 def Statistic(test_name_list, classify_predict):
+=======
+    test_set_predict = GeneratePredictResult(test_name_list, predict_label_list, test_set_predict_path)
+    Statistic(test_name_list, test_set_predict)
+
+def Statistic(test_name_list, test_set_predict):
+>>>>>>> 6d584c5a3dced798dab67ab69c8c123d0a71adae
     new_format = utils.ReadJson(utils.new_format_json_path)
     result = {}
     for name in test_name_list:
         if name in new_format:
+<<<<<<< HEAD
             result[name] = classify_predict[name][0]
+=======
+            result[name] = test_set_predict[name][0]
+>>>>>>> 6d584c5a3dced798dab67ab69c8c123d0a71adae
     if len(result.keys()) != 0:
         statistic_dic = utils.Statistic([result])
         print(statistic_dic)
