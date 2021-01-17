@@ -110,7 +110,7 @@ def RandomForest(embedded_dir, train_name_list, test_name_list, train_label_list
     Statistic(test_name_list, classify_predict)
 
 
-def Statistic(test_name_list, test_set_predict):
+def Statistic(test_name_list, classify_predict):
     new_format = utils.ReadJson(utils.new_format_json_path)
     result = {}
     for name in test_name_list:
