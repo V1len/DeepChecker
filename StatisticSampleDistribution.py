@@ -28,12 +28,7 @@ if __name__ == '__main__':
             name_list = statistic_name_dic[method]
             vec_list = utils.GetVecList(dir, name_list)
             statistic_vec = np.log(np.array(vec_list).sum(axis=0) + 1.0).tolist()
-            
-<<<<<<< HEAD
             # print(statistic_vec)
-=======
-            print(statistic_vec)
->>>>>>> 6d584c5a3dced798dab67ab69c8c123d0a71adae
             plt.subplot(2,2,index + 1)
             plt.bar(range(len(statistic_vec)),statistic_vec)
             plt.title(method)
