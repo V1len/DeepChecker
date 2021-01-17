@@ -2,7 +2,7 @@ import json
 import pickle
 import os
 
-use_all_methods = False
+use_all_methods = True
 
 if use_all_methods:
     method_list = ["dprove", "pdr", "iimc", "IC3"]
