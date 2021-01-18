@@ -110,6 +110,44 @@ def NewProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path):
         for line in data_list:
             writer.write(",".join(line) + "\n")
 
+def FinalProcessData(AVY_dprove_path, pdr_IC3_path, iimc_path, data_path):
+    method_list = utils.method_list
+
+    AVY_dprove_dic = utils.ReadJson(AVY_dprove_path)
+    AVY_dprove_name_list = list(AVY_dprove_dic.keys())
+    # print(len(AVY_dprove_name_list))
+
+    pdr_IC3_dic = utils.ReadJson(pdr_IC3_path)
+    pdr_IC3_name_list = list(pdr_IC3_dic.keys())
+    # print(len(pdr_IC3_name_list))
+
+    iimc_dic = utils.ReadJson(iimc_path)
+    iimc_name_list = list(iimc_dic.keys())
+    # print(len(pdr_IC3_name_list))
+
+    data_list = []
+    for name in pdr_IC3_name_list:
+        temp_data = [name]
+        temp_data.append(AVY_dprove_dic[name]["dprove"])
+        temp_data.append(pdr_IC3_dic[name]["pdr"])
+        temp_data.append(iimc_dic[name]["iimc"])
+        temp_data.append(pdr_IC3_dic[name]["IC3"])
+
+        mark = False
+        for time in temp_data[1:]:
+            if time != "timeout" and time != "failed" and time != "0.0":
+                mark = True
+        if mark == True:
+            data_list.append(temp_data)
+    
+    title = "filename"
+    for method in method_list:
+        title = title + "," + method
+    with open(data_path, "w") as writer:
+        writer.write(title + "\n")
+        for line in data_list:
+            writer.write(",".join(line) + "\n")
+
 def ProcessiimcData(iimc_path, data_path):
     method_list = utils.method_list
 
@@ -147,13 +185,16 @@ if __name__ == '__main__':
     pdr_IC3_path = utils.pdr_IC3_path
     others_path = utils.others_path
     iimc_path = utils.iimc_path
+    iimc_benchmark_path = utils.iimc_benchmark_path
 
     data_path = utils.basic_data_path + "data.csv"
 
     if utils.use_all_methods:
+        # FinalProcessData(AVY_dprove_path, pdr_IC3_path, iimc_path, data_path)
         NewProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path)
     else:
-        ProcessiimcData(iimc_path, data_path)
+        ProcessiimcData(iimc_benchmark_path, data_path)
 
+    # NewProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path)
     # ProcessData(others_path, data_path, AVY_dprove_path=AVY_dprove_path)
     # ProcessData(others_path, data_path)

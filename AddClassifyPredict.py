@@ -52,7 +52,6 @@ if __name__ == '__main__':
     for index in range(len(data)):
         target_method_list = predict[test_name_list[index]]
         predict_time = "timeout"
-        point = 0
         for i in range(sum_method_number):
             target_method = target_method_list[i]
             if target_method in method_list:
@@ -61,10 +60,8 @@ if __name__ == '__main__':
                 if temp_time != "timeout" and temp_time != "failed" and temp_time != "0.0":
                     if predict_time == "timeout":
                         predict_time = temp_time
-                        point = temp_point
                     elif float(temp_time) < float(predict_time):
                         predict_time = temp_time
-                        point = temp_point
             else:
                 print("no suitable checker")
         data[index].append(predict_time)
@@ -77,4 +74,4 @@ if __name__ == '__main__':
     with open(predict_data_path, "w") as writer:
         writer.write(title + ",GroundTruth\n")
         for line in data:
-            writer.write(",".join(line)+"\n")
+            writer.write(",".join(line) + "\n")

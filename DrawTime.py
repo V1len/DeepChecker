@@ -1,56 +1,88 @@
-import matplotlib.pyplot as plt
 import csv
 import utils
+import sys
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+
+def Sort(test_name_list, time_list):
+    index_list = np.array(time_list).argsort()
+    name_list = []
+    for index in index_list:
+        name_list.append(test_name_list[index])
+    return name_list
+
+def GetFigData(name_list, method, length, test_time_message, test_timeout_message):
+    solved_number_list = [0] * length
+    sum_time = 0.0
+    for name in name_list:
+        temp_time = test_time_message[name][method]
+        is_timeout = test_timeout_message[name][method]
+        if is_timeout:
+            sum_time += temp_time
+        else:
+            sum_time += temp_time
+            for i in range(length):
+                if float(i) >= sum_time:
+                    solved_number_list[i] += 1
+    return solved_number_list
+
 
 if __name__ == '__main__':
     root_path = utils.root_path
-    method_list = utils.method_list
-    for DeepChecker in utils.DeepChecker_list:
-        method_list.append(DeepChecker)
-    method_list.append("GroundTruth")
+
+    time_predict_path = utils.time_predict_path
+    time_predict_path_0 = time_predict_path + "time_predict_0.json"
+    time_predict_path_1 = time_predict_path + "time_predict_1.json"
+    time_predict_path_2 = time_predict_path + "time_predict_2.json"
+    time_predict_0 = utils.ReadJson(time_predict_path_0)
+    time_predict_1 = utils.ReadJson(time_predict_path_1)
+    time_predict_2 = utils.ReadJson(time_predict_path_2)
+    time_predict_list = [time_predict_0, time_predict_1, time_predict_2]
+    time_predict_label_list = ["predict_v0", "predict_v1", "predict_v2"]
 
     basic_data_path = utils.basic_data_path
-    predict_data_path = basic_data_path + "predict_data.csv"
-    save_path = basic_data_path + "classify.pdf"
-
-    maxtime = 3600
-    with open(predict_data_path, newline='') as csvfile:
-        data = list(csv.reader(csvfile))
-
-    xaxis = list(range(1, maxtime + 1))
-    data = data[1:]
-    # plt.subplot(1,2,1)
-    for method in method_list:
-        solved_num_list = [0] * maxtime
-        for line in data:
-            pointer = method_list.index(method) + 1
-            if line[pointer] != "timeout" and line[pointer] != "failed" and line[pointer] != "0.0":
-                lowerbound = int(float(line[pointer]) + 1)
-                for index in range(len(solved_num_list)):
-                    if index >= lowerbound:
-                        solved_num_list[index] += 1
-        plt.plot(xaxis, solved_num_list, label=method)
-
-    # maxtime = 10
-    # with open(predict_data_path, newline='') as csvfile:
-    #     data = list(csv.reader(csvfile))
-
-    # xaxis = list(range(1, maxtime + 1))
-    # data = data[1:]
-    # plt.subplot(1,2,2)
-    # for method in method_list:
-    #     solved_num_list = [0] * maxtime
-    #     for line in data:
-    #         pointer = method_list.index(method) + 1
-    #         if line[pointer] != "timeout" and line[pointer] != "failed" and line[pointer] != "0.0":
-    #             lowerbound = int(float(line[pointer]) + 1)
-    #             for index in range(len(solved_num_list)):
-    #                 if index >= lowerbound:
-    #                     solved_num_list[index] += 1
-    #     plt.plot(xaxis, solved_num_list, label=method)
-    
-    plt.legend()
-    plt.savefig(save_path)
-    plt.show()
+    test_name_list_path = basic_data_path + "test_name_list.json"
+    test_time_message_path = basic_data_path + "test_time_message.json"
+    test_timeout_message_path = basic_data_path + "test_timeout_message.json"
+    test_name_list = utils.ReadJson(test_name_list_path)
+    test_time_message = utils.ReadJson(test_time_message_path)
+    test_timeout_message = utils.ReadJson(test_timeout_message_path)
 
     
+
+    for method in utils.method_list:
+        save_path = utils.result_path + method + "_time_predict.pdf"
+        plt.figure()
+        plt.title(method)
+        plt.xlabel('Sum Time (s)')
+        plt.ylabel('Solved Number')
+
+        test_time_list = []
+        for name in test_name_list:
+            test_time_list.append(test_time_message[name][method])
+        total_test_time = np.array(test_time_list).sum()
+        length = int(total_test_time) + 2
+        ground_truth_name_list = Sort(test_name_list, test_time_list)        
+        ground_truth_solved_number_list = GetFigData(ground_truth_name_list, method, length, test_time_message, test_timeout_message)
+        plt.plot(range(length), ground_truth_solved_number_list, label="ground_truth", color="#A9A9A9", linestyle=':')
+
+        for i in range(3):
+            time_predict = time_predict_list[i]
+            predict_time_list = time_predict[method]
+            predict_name_list = Sort(test_name_list, predict_time_list)
+            predict_solved_number_list = GetFigData(predict_name_list, method, length, test_time_message, test_timeout_message)
+            plt.plot(range(length), predict_solved_number_list, label=time_predict_label_list[i])
+            
+        random_index_list = list(range(len(test_name_list)))
+        random.shuffle(random_index_list)
+        random_name_list = []
+        for index in random_index_list:
+            random_name_list.append(test_name_list[index])
+        random_solved_number_list = GetFigData(random_name_list, method, length, test_time_message, test_timeout_message)
+        plt.plot(range(length), random_solved_number_list, label="random", color="k")
+        plt.legend()
+        plt.savefig(save_path)
+        plt.show()
+        
+        

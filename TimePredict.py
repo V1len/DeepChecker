@@ -60,9 +60,9 @@ if __name__ == '__main__':
     layer_2 = "2"
 
     if use_all_methods:
-        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_time_message, time_predict_path_0, layer_0, max_depth=1, min_samples_split=2, min_samples_leaf=1)
-        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_time_message, time_predict_path_1, layer_1, max_depth=1, min_samples_split=2, min_samples_leaf=1)
-        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_time_message, time_predict_path_2, layer_2, max_depth=5, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_time_message, time_predict_path_0, layer_0, max_depth=None, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_time_message, time_predict_path_1, layer_1, max_depth=None, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_time_message, time_predict_path_2, layer_2, max_depth=None, min_samples_split=2, min_samples_leaf=1)
     else:
         RandomForest(embedded_dir_0, train_name_list, test_name_list, train_time_message, time_predict_path_0, layer_0, max_depth=3, min_samples_split=3, min_samples_leaf=1)
         RandomForest(embedded_dir_1, train_name_list, test_name_list, train_time_message, time_predict_path_1, layer_1, max_depth=4, min_samples_split=3, min_samples_leaf=1)

@@ -1,17 +1,18 @@
 import matplotlib.pyplot as plt
 import csv
 import utils
+import copy
 
 if __name__ == '__main__':
     root_path = utils.root_path
-    method_list = utils.method_list
+    method_list = copy.deepcopy(utils.method_list)
     for DeepChecker in utils.DeepChecker_list:
         method_list.append(DeepChecker)
     method_list.append("GroundTruth")
 
     basic_data_path = utils.basic_data_path
     predict_data_path = basic_data_path + "classify_predict_data.csv"
-    save_path = basic_data_path + "classify.pdf"
+    save_path = utils.result_path + "classify.pdf"
 
     maxtime = 3600
     with open(predict_data_path, newline='') as csvfile:
@@ -29,6 +30,8 @@ if __name__ == '__main__':
                 for index in range(len(solved_num_list)):
                     if index >= lowerbound:
                         solved_num_list[index] += 1
+        if method in utils.method_list:
+            method = utils.NameMap(method)
         plt.plot(xaxis, solved_num_list, label=method)
 
     # maxtime = 10

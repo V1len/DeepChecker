@@ -2,7 +2,7 @@ import json
 import pickle
 import os
 
-use_all_methods = True
+use_all_methods = False
 
 if use_all_methods:
     method_list = ["dprove", "pdr", "iimc", "IC3"]
@@ -14,7 +14,7 @@ DeepChecker_list = ["DeepChecker0", "DeepChecker1", "DeepChecker2"]
 choose_top_method_number = 1
 sum_method_number = len(method_list)
 
-date = "2021-1-17"
+date = "2021-1-18"
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
 if use_all_methods:
     basic_path = root_path + "tools/"
@@ -33,19 +33,21 @@ importance_message_path = basic_path + "importance_message/"
 importance_fig_path = basic_path + "importance_figure/"
 statistic_sample_distribution_path = basic_path + "statistic_sample_distribution/"
 basic_data_path = basic_path + "basic_data/"
+result_path = basic_path + "result/"
 path_list = [classify_model_path, classify_predict_path, time_model_path, time_predict_path, 
-    importance_message_path, importance_fig_path, statistic_sample_distribution_path, basic_data_path]
+    importance_message_path, importance_fig_path, statistic_sample_distribution_path, basic_data_path, result_path]
 for temp_path in path_list:
     if not os.path.exists(temp_path):
         os.mkdir(temp_path)
 
 # AVY_dprove_path = "/mnt/hd0/DeepChecker/dataset/2021-1-6/AVY_dprove_clean.json"
 # AVY_dprove_path = "/mnt/hd0/DeepChecker/DataForNet/2021-1-10/data_clean.json"
-AVY_dprove_path = "/mnt/hd0/DeepChecker/dataset/2020-1-12/AVY_dprove_clean.json"
-pdr_IC3_path = "/mnt/hd0/DeepChecker/dataset/2020-1-12/pdr_IC3_clean.json"
+AVY_dprove_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/AVY_dprove_clean.json"
+pdr_IC3_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/pdr_IC3_clean.json"
+iimc_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/iimc_clean.json"
 others_path = "/mnt/hd0/DeepChecker/dataset/2020-1-12/others.json"
 
-iimc_path = "/mnt/hd0/DeepChecker/dataset/2021-1-8/iimc_benchmark.json"
+iimc_benchmark_path = "/mnt/hd0/DeepChecker/dataset/2021-1-8/iimc_benchmark.json"
 new_format_json_path = "/mnt/hd0/DeepChecker/new_format.json"
 
 embedding_date_0 = "2021-1-2_v0.1"
@@ -111,4 +113,10 @@ def GetVecList(dir, name_list):
     for name in name_list:
         vector = GetVec(dir, name)
         vec_list.append(vector)
-    return vec_list 
+    return vec_list
+
+def NameMap(name):
+    dic = {"pdr": "ABC-pdr", "dprove": "ABC-dprove", "iimc": "IImc", "IC3": "IC3ref"
+        , "iimcbw": "bdd_bw_reach", "iimcfw": "bdd_fw_reach", "iimcic3": "ic3", "iimcic3lr": "ic3lr"}
+    return dic[name]
+
