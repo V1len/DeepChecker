@@ -12,20 +12,24 @@ def Sort(test_name_list, time_list):
         name_list.append(test_name_list[index])
     return name_list
 
-def GetFigData(name_list, method, length, test_time_message, test_timeout_message):
-    solved_number_list = [0] * length
+def GetFigData(name_list, method, test_time_message, test_timeout_message):
     sum_time = 0.0
+    sum_time_list = []
+    solved_number = 0
+    solved_number_list = []
     for name in name_list:
         temp_time = test_time_message[name][method]
         is_timeout = test_timeout_message[name][method]
         if is_timeout:
             sum_time += temp_time
+            sum_time_list.append(sum_time)
+            solved_number_list.append(solved_number)
         else:
             sum_time += temp_time
-            for i in range(length):
-                if float(i) >= sum_time:
-                    solved_number_list[i] += 1
-    return solved_number_list
+            sum_time_list.append(sum_time)
+            solved_number += 1
+            solved_number_list.append(solved_number)
+    return sum_time_list, solved_number_list
 
 
 if __name__ == '__main__':
@@ -61,26 +65,24 @@ if __name__ == '__main__':
         test_time_list = []
         for name in test_name_list:
             test_time_list.append(test_time_message[name][method])
-        total_test_time = np.array(test_time_list).sum()
-        length = int(total_test_time) + 2
         ground_truth_name_list = Sort(test_name_list, test_time_list)        
-        ground_truth_solved_number_list = GetFigData(ground_truth_name_list, method, length, test_time_message, test_timeout_message)
-        plt.plot(range(length), ground_truth_solved_number_list, label="ground_truth", color="#A9A9A9", linestyle=':')
+        ground_truth_sum_time_list, ground_truth_solved_number_list = GetFigData(ground_truth_name_list, method, test_time_message, test_timeout_message)
+        plt.plot(ground_truth_sum_time_list, ground_truth_solved_number_list, label="ground_truth", color="#A9A9A9", linestyle=':')
 
         for i in range(3):
             time_predict = time_predict_list[i]
             predict_time_list = time_predict[method]
             predict_name_list = Sort(test_name_list, predict_time_list)
-            predict_solved_number_list = GetFigData(predict_name_list, method, length, test_time_message, test_timeout_message)
-            plt.plot(range(length), predict_solved_number_list, label=time_predict_label_list[i])
+            predict_solved_sum_time_list, predict_solved_number_list = GetFigData(predict_name_list, method, test_time_message, test_timeout_message)
+            plt.plot(predict_solved_sum_time_list, predict_solved_number_list, label=time_predict_label_list[i])
             
         random_index_list = list(range(len(test_name_list)))
         random.shuffle(random_index_list)
         random_name_list = []
         for index in random_index_list:
             random_name_list.append(test_name_list[index])
-        random_solved_number_list = GetFigData(random_name_list, method, length, test_time_message, test_timeout_message)
-        plt.plot(range(length), random_solved_number_list, label="random", color="k")
+        random_sum_time_list, random_solved_number_list = GetFigData(random_name_list, method, test_time_message, test_timeout_message)
+        plt.plot(random_sum_time_list, random_solved_number_list, label="random", color="k")
         plt.legend()
         plt.savefig(save_path)
         plt.show()

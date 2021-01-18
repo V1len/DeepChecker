@@ -97,7 +97,7 @@ def NewProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path):
 
         mark = False
         for time in temp_data[1:]:
-            if time != "timeout" and time != "failed" and time != "0.0":
+            if time != "timeout" and time != "failed" and time != "0.0" and time != "0":
                 mark = True
         if mark == True:
             data_list.append(temp_data)
@@ -163,7 +163,7 @@ def ProcessiimcData(iimc_path, data_path):
                 time_list.append(iimc_dic[name][method])
             mark = False
             for time in time_list:
-                if time != "timeout" and time != "failed" and time != "0.0":
+                if time != "timeout" and time != "failed" and time != "0.0" and time != "0":
                     mark = True
             if mark == True:
                 temp_data = [name]
