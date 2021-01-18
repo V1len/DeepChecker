@@ -29,11 +29,11 @@ def SplitData(data_path, train_data_path, test_data_path, new_format_json_path, 
 
 
 if __name__ == '__main__':
-    basic_data_path = utils.basic_data_path
+    classify_basic_data_path = utils.classify_basic_data_path
 
-    data_path = basic_data_path + "data.csv"
-    train_data_path = basic_data_path + "train_data.csv"
-    test_data_path = basic_data_path + "test_data.csv"
+    data_path = classify_basic_data_path + "data.csv"
+    train_data_path = classify_basic_data_path + "train_data.csv"
+    test_data_path = classify_basic_data_path + "test_data.csv"
     new_format_json_path = utils.new_format_json_path
 
     SplitData(data_path, train_data_path, test_data_path, new_format_json_path, remove_mark=True)

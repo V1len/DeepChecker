@@ -39,11 +39,11 @@ if __name__ == '__main__':
     embedded_dir_1 = utils.embedded_dir_1
     embedded_dir_2 = utils.embedded_dir_2
 
-    basic_data_path = utils.basic_data_path
-    train_name_list_path = basic_data_path + "train_name_list.json"
-    train_time_message_path = basic_data_path + "train_time_message.json"
-    test_name_list_path = basic_data_path + "test_name_list.json"
-    test_time_message_path = basic_data_path + "test_time_message.json"
+    time_basic_data_path = utils.time_basic_data_path
+    train_name_list_path = time_basic_data_path + "train_name_list.json"
+    train_time_message_path = time_basic_data_path + "train_time_message.json"
+    test_name_list_path = time_basic_data_path + "test_name_list.json"
+    test_time_message_path = time_basic_data_path + "test_time_message.json"
 
     train_name_list = utils.ReadJson(train_name_list_path)
     train_time_message = utils.ReadJson(train_time_message_path)

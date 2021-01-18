@@ -10,9 +10,9 @@ if __name__ == '__main__':
         method_list.append(DeepChecker)
     method_list.append("GroundTruth")
 
-    basic_data_path = utils.basic_data_path
-    predict_data_path = basic_data_path + "classify_predict_data.csv"
-    save_path = utils.result_path + "classify.pdf"
+    classify_basic_data_path = utils.classify_basic_data_path
+    predict_data_path = classify_basic_data_path + "classify_predict_data.csv"
+    save_path = utils.classify_result_path + "classify.pdf"
 
     maxtime = 3600
     with open(predict_data_path, newline='') as csvfile:

@@ -3,13 +3,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
-    basic_data_path = utils.basic_data_path
+    classify_basic_data_path = utils.classify_basic_data_path
 
     embedded_dir_0 = utils.embedded_dir_0
     embedded_dir_1 = utils.embedded_dir_1
     embedded_dir_2 = utils.embedded_dir_2
 
-    statistic_name_dic_path = basic_data_path + "statistic_name_dic.json"
+    statistic_name_dic_path = classify_basic_data_path + "statistic_name_dic.json"
     statistic_name_dic = utils.ReadJson(statistic_name_dic_path)
 
     statistic_sample_distribution_path = utils.statistic_sample_distribution_path

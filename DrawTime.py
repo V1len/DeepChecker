@@ -33,8 +33,6 @@ def GetFigData(name_list, method, test_time_message, test_timeout_message):
 
 
 if __name__ == '__main__':
-    root_path = utils.root_path
-
     time_predict_path = utils.time_predict_path
     time_predict_path_0 = time_predict_path + "time_predict_0.json"
     time_predict_path_1 = time_predict_path + "time_predict_1.json"
@@ -45,10 +43,10 @@ if __name__ == '__main__':
     time_predict_list = [time_predict_0, time_predict_1, time_predict_2]
     time_predict_label_list = ["predict_v0", "predict_v1", "predict_v2"]
 
-    basic_data_path = utils.basic_data_path
-    test_name_list_path = basic_data_path + "test_name_list.json"
-    test_time_message_path = basic_data_path + "test_time_message.json"
-    test_timeout_message_path = basic_data_path + "test_timeout_message.json"
+    time_basic_data_path = utils.time_basic_data_path
+    test_name_list_path = time_basic_data_path + "test_name_list.json"
+    test_time_message_path = time_basic_data_path + "test_time_message.json"
+    test_timeout_message_path = time_basic_data_path + "test_timeout_message.json"
     test_name_list = utils.ReadJson(test_name_list_path)
     test_time_message = utils.ReadJson(test_time_message_path)
     test_timeout_message = utils.ReadJson(test_timeout_message_path)
@@ -56,7 +54,7 @@ if __name__ == '__main__':
     
 
     for method in utils.method_list:
-        save_path = utils.result_path + method + "_time_predict.pdf"
+        save_path = utils.time_result_path + method + "_time_predict.pdf"
         plt.figure()
         plt.title(method)
         plt.xlabel('Sum Time (s)')

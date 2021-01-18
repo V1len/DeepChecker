@@ -1,7 +1,7 @@
 import utils
 import copy
 
-def ProcessData(others_path, data_path, AVY_dprove_path=""):
+def FormerProcessData(others_path, data_path, AVY_dprove_path=""):
     method_list = utils.method_list
 
     others_list = utils.ReadJson(others_path)
@@ -61,16 +61,13 @@ def ProcessData(others_path, data_path, AVY_dprove_path=""):
         for line in data_list:
             writer.write(",".join(line) + "\n")
 
-def NewProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path):
+def ProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path):
     method_list = utils.method_list
 
     AVY_dprove_dic = utils.ReadJson(AVY_dprove_path)
-    AVY_dprove_name_list = list(AVY_dprove_dic.keys())
-    # print(len(AVY_dprove_name_list))
 
     pdr_IC3_dic = utils.ReadJson(pdr_IC3_path)
     pdr_IC3_name_list = list(pdr_IC3_dic.keys())
-    # print(len(pdr_IC3_name_list))
 
     others_list = utils.ReadJson(others_path)
     others_dic = {}
@@ -84,8 +81,6 @@ def NewProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path):
             time = str(method_time_pair[method])
             temp_dic[method] = time
         others_dic[aig_name] = temp_dic
-    others_name_list = list(others_dic.keys())
-    # print(len(others_name_list))
 
     data_list = []
     for name in pdr_IC3_name_list:
@@ -114,16 +109,11 @@ def FinalProcessData(AVY_dprove_path, pdr_IC3_path, iimc_path, data_path):
     method_list = utils.method_list
 
     AVY_dprove_dic = utils.ReadJson(AVY_dprove_path)
-    AVY_dprove_name_list = list(AVY_dprove_dic.keys())
-    # print(len(AVY_dprove_name_list))
 
     pdr_IC3_dic = utils.ReadJson(pdr_IC3_path)
     pdr_IC3_name_list = list(pdr_IC3_dic.keys())
-    # print(len(pdr_IC3_name_list))
 
     iimc_dic = utils.ReadJson(iimc_path)
-    iimc_name_list = list(iimc_dic.keys())
-    # print(len(pdr_IC3_name_list))
 
     data_list = []
     for name in pdr_IC3_name_list:
@@ -187,14 +177,13 @@ if __name__ == '__main__':
     iimc_path = utils.iimc_path
     iimc_benchmark_path = utils.iimc_benchmark_path
 
-    data_path = utils.basic_data_path + "data.csv"
+    data_path = utils.classify_basic_data_path + "data.csv"
 
     if utils.use_all_methods:
-        # FinalProcessData(AVY_dprove_path, pdr_IC3_path, iimc_path, data_path)
-        NewProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path)
+        ProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path)
     else:
         ProcessiimcData(iimc_benchmark_path, data_path)
 
-    # NewProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path)
-    # ProcessData(others_path, data_path, AVY_dprove_path=AVY_dprove_path)
-    # ProcessData(others_path, data_path)
+    # ProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path)
+    # FinalProcessData(AVY_dprove_path, pdr_IC3_path, iimc_path, data_path)
+    # FormerProcessData(others_path, data_path, AVY_dprove_path=AVY_dprove_path)

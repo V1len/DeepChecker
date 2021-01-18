@@ -129,11 +129,11 @@ if __name__ == '__main__':
     embedded_dir_1 = utils.embedded_dir_1
     embedded_dir_2 = utils.embedded_dir_2
 
-    basic_data_path = utils.basic_data_path
-    train_name_list_path = basic_data_path + "train_name_list.json"
-    train_label_dic_path = basic_data_path + "train_label_dic.json"
-    test_name_list_path = basic_data_path + "test_name_list.json"
-    test_label_dic_path = basic_data_path + "test_label_dic.json"
+    classify_basic_data_path = utils.classify_basic_data_path
+    train_name_list_path = classify_basic_data_path + "train_name_list.json"
+    train_label_dic_path = classify_basic_data_path + "train_label_dic.json"
+    test_name_list_path = classify_basic_data_path + "test_name_list.json"
+    test_label_dic_path = classify_basic_data_path + "test_label_dic.json"
 
     train_name_list = utils.ReadJson(train_name_list_path)
     train_label_dic = utils.ReadJson(train_label_dic_path)

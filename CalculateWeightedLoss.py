@@ -2,8 +2,8 @@ import utils
 import csv
 
 if __name__ == '__main__':
-    basic_data_path = utils.basic_data_path
-    predict_data_path = basic_data_path + "classify_predict_data.csv"
+    classify_basic_data_path = utils.classify_basic_data_path
+    predict_data_path = classify_basic_data_path + "classify_predict_data.csv"
 
     with open(predict_data_path, newline='') as csvfile:
         data = list(csv.reader(csvfile))

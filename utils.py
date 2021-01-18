@@ -2,7 +2,7 @@ import json
 import pickle
 import os
 
-use_all_methods = True
+use_all_methods = False
 
 if use_all_methods:
     method_list = ["dprove", "pdr", "iimc", "IC3"]
@@ -16,26 +16,44 @@ sum_method_number = len(method_list)
 
 date = "2021-1-18"
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
-if use_all_methods:
-    basic_path = root_path + "tools/"
-else:
-    basic_path = root_path + "iimc/"
-
 if not os.path.exists(root_path):
     os.mkdir(root_path)
-if not os.path.exists(basic_path):
-    os.mkdir(basic_path)
-classify_model_path = basic_path + "classify_model/"
-classify_predict_path = basic_path + "classify_predict/"
-time_model_path = basic_path + "time_model/"
-time_predict_path = basic_path + "time_predict/"
-importance_message_path = basic_path + "importance_message/"
-importance_fig_path = basic_path + "importance_figure/"
-statistic_sample_distribution_path = basic_path + "statistic_sample_distribution/"
-basic_data_path = basic_path + "basic_data/"
-result_path = basic_path + "result/"
-path_list = [classify_model_path, classify_predict_path, time_model_path, time_predict_path, 
-    importance_message_path, importance_fig_path, statistic_sample_distribution_path, basic_data_path, result_path]
+
+tools_path = root_path + "tools/"
+iimc_path = root_path + "iimc/"
+if not os.path.exists(tools_path):
+    os.mkdir(tools_path)
+if not os.path.exists(iimc_path):
+    os.mkdir(iimc_path)
+
+if use_all_methods:
+    basic_path = tools_path
+else:
+    basic_path = iimc_path
+
+classify_task_path = basic_path + "classify/"
+time_task_path = basic_path + "time/"
+if not os.path.exists(classify_task_path):
+    os.mkdir(classify_task_path)
+if not os.path.exists(time_task_path):
+    os.mkdir(time_task_path)
+
+classify_model_path = classify_task_path + "classify_model/"
+classify_predict_path = classify_task_path + "classify_predict/"
+importance_message_path = classify_task_path + "importance_message/"
+importance_fig_path = classify_task_path + "importance_figure/"
+statistic_sample_distribution_path = classify_task_path + "statistic_sample_distribution/"
+classify_basic_data_path = classify_task_path + "basic_data/"
+classify_result_path = classify_task_path + "result/"
+
+time_model_path = time_task_path + "time_model/"
+time_predict_path = time_task_path + "time_predict/"
+time_basic_data_path = time_task_path + "basic_data/"
+time_result_path = time_task_path + "result/"
+
+path_list = [classify_model_path, classify_predict_path, importance_message_path, importance_fig_path,
+                    statistic_sample_distribution_path, classify_basic_data_path, classify_result_path,
+                            time_model_path, time_predict_path, time_basic_data_path, time_result_path]
 for temp_path in path_list:
     if not os.path.exists(temp_path):
         os.mkdir(temp_path)

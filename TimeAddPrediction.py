@@ -3,17 +3,15 @@ import utils
 import sys
 
 if __name__ == '__main__':
-    root_path = utils.root_path
-
     time_predict_path = utils.time_predict_path
     time_predict_path_0 = time_predict_path + "time_predict_0.json"
     time_predict_path_1 = time_predict_path + "time_predict_1.json"
     time_predict_path_2 = time_predict_path + "time_predict_2.json"
 
-    basic_data_path = utils.basic_data_path
-    test_name_list_path = basic_data_path + "test_name_list.json"
-    test_data_path = basic_data_path + "test_data.csv"
-    predict_data_path = basic_data_path + "time_predict_data.csv"
+    time_basic_data_path = utils.time_basic_data_path
+    test_name_list_path = time_basic_data_path + "test_name_list.json"
+    test_data_path = time_basic_data_path + "test_data.csv"
+    predict_data_path = time_basic_data_path + "time_predict_data.csv"
 
     with open(test_data_path, newline='') as csvfile:
         data = list(csv.reader(csvfile))

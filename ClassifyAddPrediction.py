@@ -4,7 +4,6 @@ import sys
 import random
 
 if __name__ == '__main__':
-    root_path = utils.root_path
     choose_top_method_number = utils.choose_top_method_number
     sum_method_number = utils.sum_method_number
 
@@ -13,10 +12,10 @@ if __name__ == '__main__':
     classify_predict_path_1 = classify_predict_path + "classify_predict_1.json"
     classify_predict_path_2 = classify_predict_path + "classify_predict_2.json"
 
-    basic_data_path = utils.basic_data_path
-    test_name_list_path = basic_data_path + "test_name_list.json"
-    test_data_path = basic_data_path + "test_data.csv"
-    predict_data_path = basic_data_path + "classify_predict_data.csv"
+    classify_basic_data_path = utils.classify_basic_data_path
+    test_name_list_path = classify_basic_data_path + "test_name_list.json"
+    test_data_path = classify_basic_data_path + "test_data.csv"
+    predict_data_path = classify_basic_data_path + "classify_predict_data.csv"
 
     with open(test_data_path, newline='') as csvfile:
         data = list(csv.reader(csvfile))
