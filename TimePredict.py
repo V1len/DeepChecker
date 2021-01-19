@@ -32,7 +32,6 @@ def RandomForest(embedded_dir, train_name_list, test_name_list, train_time_messa
 
 
 if __name__ == '__main__':
-    root_path = utils.root_path
     use_all_methods = utils.use_all_methods
 
     embedded_dir_0 = utils.embedded_dir_0

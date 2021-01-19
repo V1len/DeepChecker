@@ -2,19 +2,19 @@ import json
 import pickle
 import os
 
-use_all_methods = False
+use_all_methods = True
 
 if use_all_methods:
     method_list = ["dprove", "pdr", "iimc", "IC3"]
 else:
     method_list = ["iimcbw", "iimcfw", "iimcic3", "iimcic3lr"]
 
-DeepChecker_list = ["DeepChecker0", "DeepChecker1", "DeepChecker2"]
+encoding_layer_list = ["0-depth Encoding", "1-depth Encoding", "2-depth Encoding"]
 
 choose_top_method_number = 1
 sum_method_number = len(method_list)
 
-date = "2021-1-18"
+date = "2021-1-19"
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
 if not os.path.exists(root_path):
     os.mkdir(root_path)
@@ -65,7 +65,8 @@ pdr_IC3_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/pdr_IC3_clean.json"
 iimc_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/iimc_clean.json"
 others_path = "/mnt/hd0/DeepChecker/dataset/2020-1-12/others.json"
 
-iimc_benchmark_path = "/mnt/hd0/DeepChecker/dataset/2021-1-8/iimc_benchmark.json"
+# iimc_benchmark_path = "/mnt/hd0/DeepChecker/dataset/2021-1-8/iimc_benchmark.json"
+iimc_benchmark_path = "/mnt/hd0/DeepChecker/dataset/2021-1-19/iimc_benchmark.json"
 new_format_json_path = "/mnt/hd0/DeepChecker/new_format.json"
 
 embedding_date_0 = "2021-1-2_v0.1"
@@ -132,6 +133,15 @@ def GetVecList(dir, name_list):
         vector = GetVec(dir, name)
         vec_list.append(vector)
     return vec_list
+
+def GetLabelList(name_list, label_dic):
+    label_list = []
+    for name in name_list:
+        aig_label = label_dic[name]
+        assert(aig_label in method_list)
+        label = method_list.index(aig_label)
+        label_list.append(label)
+    return label_list
 
 def NameMap(name):
     dic = {"pdr": "ABC-pdr", "dprove": "ABC-dprove", "iimc": "IImc", "IC3": "IC3ref"

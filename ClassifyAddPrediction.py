@@ -64,13 +64,17 @@ if __name__ == '__main__':
             else:
                 print("no suitable checker")
         data[index].append(predict_time)
+
+    for index in range(len(data)):
+        random_point = random.randint(1, len(utils.method_list))
+        data[index].append(data[index][random_point])
         
     title = "filename"
     for method in method_list:
         title = title + "," + method
-    for DeepChecker in utils.DeepChecker_list:
-        title = title + "," + DeepChecker
+    for encoding_layer_list in utils.encoding_layer_list:
+        title = title + "," + encoding_layer_list
     with open(predict_data_path, "w") as writer:
-        writer.write(title + ",GroundTruth\n")
+        writer.write(title + ",Ground Truth,Random\n")
         for line in data:
             writer.write(",".join(line) + "\n")

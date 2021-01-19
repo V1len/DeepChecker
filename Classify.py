@@ -7,17 +7,6 @@ np.seterr(divide='ignore',invalid='ignore')
 from sklearn.model_selection import GridSearchCV
 from sklearn import metrics
 
-
-def GetLabelList(name_list, label_dic):
-    label_list = []
-    method_list = utils.method_list
-    for name in name_list:
-        aig_label = label_dic[name]
-        assert(aig_label in method_list)
-        label = method_list.index(aig_label)
-        label_list.append(label)
-    return label_list
-
 def GeneratePredictResult(test_name_list, predict_label_list, classify_predict_path):
     classify_predict = {}
     method_list = utils.method_list
@@ -122,7 +111,6 @@ def Statistic(test_name_list, classify_predict):
 
 
 if __name__ == '__main__':
-    root_path = utils.root_path
     use_all_methods = utils.use_all_methods
 
     embedded_dir_0 = utils.embedded_dir_0
@@ -140,8 +128,8 @@ if __name__ == '__main__':
     test_name_list = utils.ReadJson(test_name_list_path)
     test_label_dic = utils.ReadJson(test_label_dic_path)
 
-    train_label_list = GetLabelList(train_name_list, train_label_dic)
-    test_label_list = GetLabelList(test_name_list, test_label_dic)
+    train_label_list = utils.GetLabelList(train_name_list, train_label_dic)
+    test_label_list = utils.GetLabelList(test_name_list, test_label_dic)
 
     classify_predict_path = utils.classify_predict_path
     classify_predict_path_0 = classify_predict_path + "classify_predict_0.json"

@@ -10,13 +10,12 @@ if __name__ == '__main__':
     data = data[1:]
     test_num = len(data)
     method_list = utils.method_list
-    DeepChecker_list = utils.DeepChecker_list
-    for DeepChecker in DeepChecker_list:
-        print(DeepChecker)
+    encoding_layer_list = utils.encoding_layer_list
+    for layer in encoding_layer_list:
         sum_weighted_loss = 0.0
         for line in data:
-            predict_time = line[len(method_list) + DeepChecker_list.index(DeepChecker) + 1]
-            truth_time = line[len(method_list) + len(DeepChecker_list) + 1]
+            predict_time = line[len(method_list) + encoding_layer_list.index(layer) + 1]
+            truth_time = line[len(method_list) + len(encoding_layer_list) + 1]
             if predict_time == "failed" or predict_time == "timeout" or predict_time == "0.0":
                 sum_weighted_loss += (3600.0 - float(truth_time))
             else:

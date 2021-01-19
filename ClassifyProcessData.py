@@ -181,6 +181,8 @@ if __name__ == '__main__':
 
     if utils.use_all_methods:
         ProcessData(AVY_dprove_path, pdr_IC3_path, others_path, data_path)
+        # FinalProcessData(AVY_dprove_path, pdr_IC3_path, iimc_path, data_path)
+
     else:
         ProcessiimcData(iimc_benchmark_path, data_path)
 
