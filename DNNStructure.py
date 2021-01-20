@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
 from torch.nn import init
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import Dataset
+import utils
 
 class BaseBlock(nn.Module):
     def __init__(self, in_features, out_features):
@@ -54,3 +55,19 @@ def initNetParams(net):
         elif isinstance(m, nn.Linear):
             m.weight.data.normal_(0, 0.01)
             m.bias.data.zero_()
+
+
+class MyDataSet(Dataset):
+    def __init__(self, name_list, vec_list, label_list):
+        self.name_list = name_list
+        self.vec_list = vec_list
+        self.label_list = label_list
+
+    def __len__(self):
+        return len(self.name_list)
+
+    def __getitem__(self, index):
+        name = self.name_list[index]
+        vec = self.vec_list[index]
+        label = utils.method_list.index(self.label_list[index])
+        return name, vec, label

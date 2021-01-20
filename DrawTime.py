@@ -40,8 +40,8 @@ if __name__ == '__main__':
     time_predict_0 = utils.ReadJson(time_predict_path_0)
     time_predict_1 = utils.ReadJson(time_predict_path_1)
     time_predict_2 = utils.ReadJson(time_predict_path_2)
-    time_predict_list = [time_predict_0, time_predict_1, time_predict_2]
-    time_predict_label_list = utils.encoding_layer_list
+    time_predict_list = [time_predict_2, time_predict_1, time_predict_0]
+    time_predict_label_list = ["2-depth Encoding", "1-depth Encoding", "0-depth Encoding"]
 
     time_basic_data_path = utils.time_basic_data_path
     test_name_list_path = time_basic_data_path + "test_name_list.json"
@@ -60,13 +60,7 @@ if __name__ == '__main__':
         plt.xlabel('Sum Time (s)')
         plt.ylabel('Solved Number')
 
-        test_time_list = []
-        for name in test_name_list:
-            test_time_list.append(test_time_message[name][method])
-        ground_truth_name_list = Sort(test_name_list, test_time_list)        
-        ground_truth_sum_time_list, ground_truth_solved_number_list = GetFigData(ground_truth_name_list, method, test_time_message, test_timeout_message)
-        plt.plot(ground_truth_sum_time_list, ground_truth_solved_number_list, label="Ground Truth", color="#C0C0C0", linestyle=':')
-
+        
         for i in range(len(time_predict_label_list)):
             label = time_predict_label_list[i]
             time_predict = time_predict_list[i]
@@ -80,7 +74,14 @@ if __name__ == '__main__':
             elif label == "2-depth Encoding":
                 color = "#D15B7F"
             plt.plot(predict_solved_sum_time_list, predict_solved_number_list, label=label, color=color)
-            
+
+        test_time_list = []
+        for name in test_name_list:
+            test_time_list.append(test_time_message[name][method])
+        ground_truth_name_list = Sort(test_name_list, test_time_list)        
+        ground_truth_sum_time_list, ground_truth_solved_number_list = GetFigData(ground_truth_name_list, method, test_time_message, test_timeout_message)
+        plt.plot(ground_truth_sum_time_list, ground_truth_solved_number_list, label="Ground Truth", color="#C0C0C0", linestyle=':')
+
         random_index_list = list(range(len(test_name_list)))
         random.shuffle(random_index_list)
         random_name_list = []
@@ -88,6 +89,7 @@ if __name__ == '__main__':
             random_name_list.append(test_name_list[index])
         random_sum_time_list, random_solved_number_list = GetFigData(random_name_list, method, test_time_message, test_timeout_message)
         plt.plot(random_sum_time_list, random_solved_number_list, label="random", color="#C0C0C0", linestyle="--")
+
         plt.legend()
         plt.savefig(save_path)
         plt.show()

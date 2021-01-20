@@ -71,27 +71,17 @@ if __name__ == '__main__':
             linestyle = None
         plt.plot(xaxis, solved_num_list, label=method, color=color, linestyle=linestyle)
 
-    # maxtime = 10
-    # with open(predict_data_path, newline='') as csvfile:
-    #     data = list(csv.reader(csvfile))
 
-    # xaxis = list(range(1, maxtime + 1))
-    # data = data[1:]
-    # plt.subplot(1,2,2)
-    # for method in method_list:
-    #     solved_num_list = [0] * maxtime
-    #     for line in data:
-    #         pointer = method_list.index(method) + 1
-    #         if line[pointer] != "timeout" and line[pointer] != "failed" and line[pointer] != "0.0":
-    #             lowerbound = int(float(line[pointer]) + 1)
-    #             for index in range(len(solved_num_list)):
-    #                 if index >= lowerbound:
-    #                     solved_num_list[index] += 1
-    #     plt.plot(xaxis, solved_num_list, label=method)
     plt.xlabel('Time (s)')
     plt.ylabel('# Solved Benchmarks')
     plt.legend()
     plt.savefig(save_path)
     plt.show()
+
+
+
+
+
+    
 
     

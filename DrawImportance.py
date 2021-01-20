@@ -17,16 +17,25 @@ if __name__ == '__main__':
     importance_2_save_path = importance_fig_path + "importance_2.pdf"
  
     plt.figure()
+    plt.title("Importance of 0-depth Encoding")
     plt.bar(range(len(importance_0)), importance_0)
+    plt.xlabel('Features')
+    plt.ylabel('Importance')
     plt.savefig(importance_0_save_path)
     plt.show()
 
     plt.figure()
+    plt.title("Importance of 1-depth Encoding")
     plt.bar(range(len(importance_1)), importance_1)
+    plt.xlabel('Features')
+    plt.ylabel('Importance')
     plt.savefig(importance_1_save_path)
     plt.show()
 
     plt.figure()
+    plt.title("Importance of 2-depth Encoding")
     plt.bar(range(len(importance_2)), importance_2)
+    plt.xlabel('Features')
+    plt.ylabel('Importance')
     plt.savefig(importance_2_save_path)
     plt.show()
