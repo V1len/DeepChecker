@@ -4,6 +4,7 @@ import sys
 import random
 import numpy as np
 import matplotlib.pyplot as plt
+import copy
 
 def ChangeData(data):
     if data != "timeout" and data != "failed" and data != "0.0" and data != "0":
@@ -13,70 +14,91 @@ def ChangeData(data):
     return changed_data
 
 if __name__ == '__main__':
-    classify_basic_data_path = utils.classify_basic_data_path
-    predict_data_path = classify_basic_data_path + "classify_predict_data.csv"
-    save_path = utils.classify_result_path + "classify.pdf"
+    time_basic_data_path = utils.time_basic_data_path
+
+    time_predict_label_list = ["0-depth Encoding", "1-depth Encoding", "2-depth Encoding"]
+    for i in range(len(time_predict_label_list)):
+        save_path = utils.time_result_path + time_predict_label_list[i] + "_sort.pdf"
+        plt.figure()
+        plt.title(time_predict_label_list[i])
+        fig, ax = plt.subplots(2, 3)
+        for method in utils.method_list:
+            predict_name_sort = utils.ReadJson(time_basic_data_path + method + "_name_sort_" + str(i) + ".json")
+            truth_name_sort = utils.ReadJson(time_basic_data_path + method + "_name_sort_truth.json")
+            yaxis = list(range(len(truth_name_sort)))
+            xaxis = []
+            for name in predict_name_sort:
+                xaxis.append(truth_name_sort.index(name))
+            arg = 230 + utils.method_list.index(method) + 1
+            temp_ax = fig.add_subplot(arg)
+            temp_ax.scatter(xaxis, yaxis, s=2)
+            temp_ax.set_xscale('linear')
+            temp_ax.set_yscale('linear')
+            temp_ax.set_title(method)
+        yaxis = list(range(len(truth_name_sort)))
+        xaxis = copy.deepcopy(yaxis)
+        random.shuffle(xaxis)
+        arg = 235
+        temp_ax = fig.add_subplot(arg)
+        temp_ax.scatter(xaxis, yaxis, s=2)
+        temp_ax.set_xscale('linear')
+        temp_ax.set_yscale('linear')
+        temp_ax.set_title("random")
+        
+        plt.savefig(save_path)
+
+
+    predict_data_path = time_basic_data_path + "time_predict_data.csv"
 
     with open(predict_data_path, newline='') as csvfile:
         data = list(csv.reader(csvfile))
 
-    data = data[1:]
-    
-    truth_data_list = []
-    random_data_list = []
-    predict_data_list_0 = []
-    predict_data_list_1 = []
-    predict_data_list_2 = []
+    data = data[1:]        
+    truth_dprove_data_list = []
+    truth_pdr_data_list = []
+    truth_iimc_data_list = []
+    truth_IC3_data_list = []
     for line in data:
-        truth_data_list.append(ChangeData(line[len(utils.method_list) + len(utils.encoding_layer_list) + 1]))
-        random_data_list.append(ChangeData(line[len(utils.method_list) + len(utils.encoding_layer_list) + 2]))
-        predict_data_list_0.append(ChangeData(line[len(utils.method_list) + 1]))
-        predict_data_list_1.append(ChangeData(line[len(utils.method_list) + 2]))
-        predict_data_list_2.append(ChangeData(line[len(utils.method_list) + 3]))
+        truth_dprove_data_list.append(ChangeData(line[1]))
+        truth_pdr_data_list.append(ChangeData(line[2]))
+        truth_iimc_data_list.append(ChangeData(line[3]))
+        truth_IC3_data_list.append(ChangeData(line[4]))
 
-
-    all_data_list = [random_data_list, predict_data_list_0, predict_data_list_1, predict_data_list_2]
-    figure_label_list = ["Random", "0-depth Encoding", "1-depth Encoding", "2-depth Encoding"]
-    for i in range(len(all_data_list)):
-        temp_data_list = all_data_list[i]
+    figure_label_list = ["0-depth Encoding", "1-depth Encoding", "2-depth Encoding"]
+    for i in range(len(figure_label_list)):
         label = figure_label_list[i]
-        save_path = utils.classify_result_path + figure_label_list[i] + ".pdf"
-        for layer in utils.encoding_layer_list:
-            # x=[1000,2000,3000]
-            # y=[1000,2000,3000]
-            fig, ax = plt.subplots()
-            ax.scatter(temp_data_list, truth_data_list)
-
-            # for i in range(len(data)):
-            #     ax.scatter(temp_data_list[i], truth_data_list[i])
-            # ax.set_tilte(label)
-            ax.set_xlabel('Predict Time (s)')
-            ax.set_ylabel('Truth Time (s)')
-            ax.set_xlim(0, 500)
-            ax.set_ylim(0, 500)
-            # ax.set_xscale('log')
-            # ax.set_yscale('log')
-            # ax.xaxis.set_major_locator(ticker.LogLocator(base=100.0, numticks=5))
-            # ax.yaxis.set_major_locator(ticker.LogLocator(base=100.0, numticks=5))
+        dprove_data_list = []
+        pdr_data_list = []
+        iimc_data_list = []
+        IC3_data_list = []
+        for line in data:
+            dprove_data_list.append(ChangeData(line[4 * i + 5]))
+            pdr_data_list.append(ChangeData(line[4 * i + 6]))
+            iimc_data_list.append(ChangeData(line[4 * i + 7]))
+            IC3_data_list.append(ChangeData(line[4 * i + 8]))
             
-            # fig = plt.gcf()
-            plt.title(label)
-            plt.savefig(save_path)
+        save_path = utils.time_result_path + label + ".pdf"
+        fig, ax = plt.subplots(2, 2)
+        ax[0][0].set_title(utils.NameMap("dprove"))
+        ax[0][0].scatter(dprove_data_list, truth_dprove_data_list, s=2)
+        # ax[0][0].set_xlabel('Predict Time (s)')
+        # ax[0][0].set_ylabel('Truth Time (s)')
+        ax[0][0].set_xscale('log')
+        ax[0][0].set_yscale('log')
 
+        ax[0][1].set_title(utils.NameMap("pdr"))
+        ax[0][1].scatter(pdr_data_list, truth_pdr_data_list, s=2)
+        ax[0][1].set_xscale('log')
+        ax[0][1].set_yscale('log')
 
-        # for layer in utils.encoding_layer_list:
-        #     xticks = [0.01, 0.1, 1, 10, 100, 1000, 3600]
-        #     xtickslabel = [0.01, 0.1, 1, 10, 100, 1000, 3600]
-        #     yticks = [0.01, 0.1, 1, 10, 100, 1000, 3600]
-        #     ytickslabel = [0.01, 0.1, 1, 10, 100, 1000, 3600]
-            
-        #     plt.figure()
-        #     plt.xticks(xticks, xtickslabel)
-        #     plt.yticks(yticks, ytickslabel)
-        #     plt.xlabel('Predict Time (s)')
-        #     plt.ylabel('Truth Time (s)')
-        #     for j in range(len(data)):
-        #         plt.scatter(temp_data_list[j], truth_data_list[j])
-        #     plt.scatter(temp_data_list, truth_data_list)
-        #     plt.savefig(save_path)
-        #     plt.show()
+        ax[1][0].set_title(utils.NameMap("iimc"))
+        ax[1][0].scatter(iimc_data_list, truth_iimc_data_list, s=2)
+        ax[1][0].set_xscale('log')
+        ax[1][0].set_yscale('log')
+
+        ax[1][1].set_title(utils.NameMap("IC3"))
+        ax[1][1].scatter(IC3_data_list, truth_IC3_data_list, s=2)
+        ax[1][1].set_xscale('log')
+        ax[1][1].set_yscale('log')
+
+        plt.savefig(save_path)

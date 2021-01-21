@@ -51,21 +51,20 @@ if __name__ == '__main__':
     test_time_message = utils.ReadJson(test_time_message_path)
     test_timeout_message = utils.ReadJson(test_timeout_message_path)
 
-    
-
     for method in utils.method_list:
         save_path = utils.time_result_path + method + "_time_predict.pdf"
         plt.figure()
         plt.title(method)
         plt.xlabel('Sum Time (s)')
         plt.ylabel('Solved Number')
-
         
         for i in range(len(time_predict_label_list)):
             label = time_predict_label_list[i]
             time_predict = time_predict_list[i]
             predict_time_list = time_predict[method]
             predict_name_list = Sort(test_name_list, predict_time_list)
+            temp_name_sort_path = utils.time_basic_data_path + method + "_name_sort_" + str(2 - i) + ".json"
+            utils.WriteJson(predict_name_list, temp_name_sort_path)
             predict_solved_sum_time_list, predict_solved_number_list = GetFigData(predict_name_list, method, test_time_message, test_timeout_message)
             if label == "0-depth Encoding":
                 color = "#FEB64D"
@@ -78,7 +77,9 @@ if __name__ == '__main__':
         test_time_list = []
         for name in test_name_list:
             test_time_list.append(test_time_message[name][method])
-        ground_truth_name_list = Sort(test_name_list, test_time_list)        
+        ground_truth_name_list = Sort(test_name_list, test_time_list)
+        truth_name_sort_path = utils.time_basic_data_path + method + "_name_sort_truth.json"
+        utils.WriteJson(ground_truth_name_list, truth_name_sort_path)      
         ground_truth_sum_time_list, ground_truth_solved_number_list = GetFigData(ground_truth_name_list, method, test_time_message, test_timeout_message)
         plt.plot(ground_truth_sum_time_list, ground_truth_solved_number_list, label="Ground Truth", color="#C0C0C0", linestyle=':')
 

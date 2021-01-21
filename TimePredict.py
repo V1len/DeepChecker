@@ -23,7 +23,7 @@ def RandomForest(embedded_dir, train_name_list, test_name_list, train_time_messa
     for method in utils.method_list:
         whole_time_model_path = time_model_path + method + "_model_" + layer + ".pkl"
         train_time_list = GetTimeList(train_name_list, train_time_message, method)
-        model = RandomForestRegressor(n_estimators=100, criterion="mse", max_depth=max_depth, min_samples_split=min_samples_split, min_samples_leaf=min_samples_leaf)
+        model = RandomForestRegressor(n_estimators=100, criterion="mae", max_depth=max_depth, min_samples_split=min_samples_split, min_samples_leaf=min_samples_leaf)
         model.fit(train_vec_list, train_time_list)
         utils.Save_pkl(model, whole_time_model_path)
         predict_time_list = model.predict(test_vec_list)
@@ -59,9 +59,9 @@ if __name__ == '__main__':
     layer_2 = "2"
 
     if use_all_methods:
-        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_time_message, time_predict_path_0, layer_0, max_depth=1, min_samples_split=2, min_samples_leaf=1)
-        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_time_message, time_predict_path_1, layer_1, max_depth=1, min_samples_split=2, min_samples_leaf=1)
-        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_time_message, time_predict_path_2, layer_2, max_depth=5, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_time_message, time_predict_path_0, layer_0, max_depth=None, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_time_message, time_predict_path_1, layer_1, max_depth=None, min_samples_split=2, min_samples_leaf=1)
+        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_time_message, time_predict_path_2, layer_2, max_depth=None, min_samples_split=2, min_samples_leaf=1)
     else:
         RandomForest(embedded_dir_0, train_name_list, test_name_list, train_time_message, time_predict_path_0, layer_0, max_depth=3, min_samples_split=3, min_samples_leaf=1)
         RandomForest(embedded_dir_1, train_name_list, test_name_list, train_time_message, time_predict_path_1, layer_1, max_depth=4, min_samples_split=3, min_samples_leaf=1)
