@@ -2,6 +2,8 @@ from sklearn.ensemble import RandomForestRegressor
 import utils
 import os
 import numpy as np
+import pydotplus
+from sklearn import tree
 np.seterr(divide='ignore',invalid='ignore')
 
 from sklearn.model_selection import GridSearchCV
@@ -15,7 +17,7 @@ def GetTimeList(name_list, time_message, method):
     return time_list
 
 def RandomForest(embedded_dir, train_name_list, test_name_list, train_time_message, time_predict_path, layer,
-                                                                                    max_depth, min_samples_split=2, min_samples_leaf=1):
+                                                                max_depth, min_samples_split=2, min_samples_leaf=1):
     time_model_path = utils.time_model_path
     train_vec_list = utils.GetVecList(embedded_dir, train_name_list)
     test_vec_list = utils.GetVecList(embedded_dir, test_name_list)
@@ -28,6 +30,16 @@ def RandomForest(embedded_dir, train_name_list, test_name_list, train_time_messa
         utils.Save_pkl(model, whole_time_model_path)
         predict_time_list = model.predict(test_vec_list)
         time_predict_message[method] = predict_time_list.tolist()
+        # trees = model.estimators_
+        # dot_data = tree.export_graphviz(trees[0],
+        #                         out_file = None,
+        #                         feature_names = list(range(len(train_vec_list[0]))),
+        #                         class_names = train_time_list,
+        #                         filled = True,
+        #                         rounded = True
+        #                        )
+        # graph = pydotplus.graph_from_dot_data(dot_data)
+        # graph.write_pdf(utils.time_result_path + method + "_" + layer + ".pdf")
     utils.WriteJson(time_predict_message, time_predict_path)
 
 

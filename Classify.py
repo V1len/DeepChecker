@@ -2,6 +2,9 @@ from sklearn.ensemble import RandomForestClassifier
 import utils
 import os
 import numpy as np
+import pydotplus
+from sklearn import tree
+
 np.seterr(divide='ignore',invalid='ignore')
 
 from sklearn.model_selection import GridSearchCV
@@ -38,49 +41,6 @@ def GetAcc(predict_label_list, test_label_list):
         acc = (predict_label_list[:, i] == test_label_list).sum() / len(test_label_list)
         sum_acc += acc
     return sum_acc
-
-def RandomForestTest(embedded_dir, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path):
-    X = utils.GetVecList(embedded_dir, train_name_list)
-    test_X = utils.GetVecList(embedded_dir, test_name_list)
-    y = train_label_list
-    test_y = test_label_list
-
-    # model = RandomForestClassifier(n_estimators=70, criterion="entropy", max_depth=5, min_samples_split=12)
-    # classifier = model.fit(X, y)
-    # predictions = classifier.predict_proba(test_X)
-    # # print(predictions)
-    # predict_label_list = np.argsort(-predictions, axis=1)
-    # # print(predict_label_list)
-    
-    # sum_acc = GetAcc(predict_label_list, test_y)
-    # print(sum_acc)
-
-    # test_set_predict = GeneratePredictResult(test_name_list, predict_label_list, test_set_predict_path)
-    # Statistic(test_name_list, test_set_predict)
-
-    # estimator = RandomForestClassifier()
-    # param_test1= {'n_estimators':range(10,201,10)}
-    # gsearch1= GridSearchCV(estimator = estimator, param_grid =param_test1, cv=5)
-    # gsearch1.fit(X,y)
-    # print(gsearch1.cv_results_,gsearch1.best_params_, gsearch1.best_score_)
-
-    # estimator = RandomForestClassifier(n_estimators=100, criterion="entropy")
-    # param_test2= {'max_depth':range(1,50,1)}
-    # gsearch2= GridSearchCV(estimator, param_grid = param_test2, iid=False, cv=5)
-    # gsearch2.fit(X,y)
-    # print(gsearch2.cv_results_,gsearch2.best_params_, gsearch2.best_score_)
-
-    # estimator = RandomForestClassifier(n_estimators=100, criterion="entropy", max_depth=10)
-    # param_test2= {'min_samples_split':range(2,50,1)}
-    # gsearch2= GridSearchCV(estimator, param_grid = param_test2, iid=False, cv=5)
-    # gsearch2.fit(X,y)
-    # print(gsearch2.cv_results_,gsearch2.best_params_, gsearch2.best_score_)
-
-    estimator = RandomForestClassifier(n_estimators=100, criterion="entropy", max_depth=10, min_samples_split=2)
-    param_test2= {'min_samples_leaf':range(1,50,1)}
-    gsearch2= GridSearchCV(estimator, param_grid = param_test2, iid=False, cv=5)
-    gsearch2.fit(X,y)
-    print(gsearch2.cv_results_,gsearch2.best_params_, gsearch2.best_score_)
     
 def RandomForest(embedded_dir, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path, model_path, importance_path,
                                                                                     max_depth, min_samples_split=2, min_samples_leaf=1):
@@ -97,7 +57,19 @@ def RandomForest(embedded_dir, train_name_list, test_name_list, train_label_list
     print(sum_acc)
     classify_predict = GeneratePredictResult(test_name_list, predict_label_list, classify_predict_path)
     Statistic(test_name_list, classify_predict)
-
+    # class_names = []
+    # for label in train_label_list:
+    #     class_names.append(str(label))
+    # trees = model.estimators_
+    # dot_data = tree.export_graphviz(trees[20],
+    #                         out_file = None,
+    #                         feature_names = list(range(len(train_vec_list[0]))),
+    #                         class_names = class_names,
+    #                         filled = True,
+    #                         rounded = True
+    #                         )
+    # graph = pydotplus.graph_from_dot_data(dot_data)
+    # graph.write_pdf(utils.classify_result_path + layer + ".pdf")
 
 def Statistic(test_name_list, classify_predict):
     new_format = utils.ReadJson(utils.new_format_json_path)
@@ -145,10 +117,6 @@ if __name__ == '__main__':
     importance_path_0 = importance_message_path + "importance_0.json"
     importance_path_1 = importance_message_path + "importance_1.json"
     importance_path_2 = importance_message_path + "importance_2.json"
-
-    # RandomForestTest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_0)
-    # RandomForestTest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_1)
-    # RandomForestTest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, test_set_predict_path_2)
 
     if use_all_methods:
         RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path_0, classify_model_path_0, importance_path_0, max_depth=1, min_samples_split=2, min_samples_leaf=1)

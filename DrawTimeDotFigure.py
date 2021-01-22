@@ -21,29 +21,29 @@ if __name__ == '__main__':
         save_path = utils.time_result_path + time_predict_label_list[i] + "_sort.pdf"
         plt.figure()
         plt.title(time_predict_label_list[i])
-        fig, ax = plt.subplots(2, 3)
+        fig, ax = plt.subplots(2, 2)
         for method in utils.method_list:
             predict_name_sort = utils.ReadJson(time_basic_data_path + method + "_name_sort_" + str(i) + ".json")
             truth_name_sort = utils.ReadJson(time_basic_data_path + method + "_name_sort_truth.json")
             yaxis = list(range(len(truth_name_sort)))
             xaxis = []
-            for name in predict_name_sort:
-                xaxis.append(truth_name_sort.index(name))
-            arg = 230 + utils.method_list.index(method) + 1
+            for name in truth_name_sort:
+                xaxis.append(predict_name_sort.index(name))
+            arg = 220 + utils.method_list.index(method) + 1
             temp_ax = fig.add_subplot(arg)
             temp_ax.scatter(xaxis, yaxis, s=2)
             temp_ax.set_xscale('linear')
             temp_ax.set_yscale('linear')
             temp_ax.set_title(method)
-        yaxis = list(range(len(truth_name_sort)))
-        xaxis = copy.deepcopy(yaxis)
-        random.shuffle(xaxis)
-        arg = 235
-        temp_ax = fig.add_subplot(arg)
-        temp_ax.scatter(xaxis, yaxis, s=2)
-        temp_ax.set_xscale('linear')
-        temp_ax.set_yscale('linear')
-        temp_ax.set_title("random")
+        # yaxis = list(range(len(truth_name_sort)))
+        # xaxis = copy.deepcopy(yaxis)
+        # random.shuffle(xaxis)
+        # arg = 235
+        # temp_ax = fig.add_subplot(arg)
+        # temp_ax.scatter(xaxis, yaxis, s=2)
+        # temp_ax.set_xscale('linear')
+        # temp_ax.set_yscale('linear')
+        # temp_ax.set_title("random")
         
         plt.savefig(save_path)
 

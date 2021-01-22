@@ -64,6 +64,7 @@ AVY_dprove_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/AVY_dprove_clean.json"
 pdr_IC3_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/pdr_IC3_clean.json"
 iimc_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/iimc_clean.json"
 others_path = "/mnt/hd0/DeepChecker/dataset/2020-1-12/others.json"
+hwmcc_clean_path = "/mnt/hd0/DeepChecker/dataset/2020-1-22/hwmcc_clean.json"
 
 # iimc_benchmark_path = "/mnt/hd0/DeepChecker/dataset/2021-1-8/iimc_benchmark.json"
 iimc_benchmark_path = "/mnt/hd0/DeepChecker/dataset/2021-1-19/iimc_benchmark.json"
