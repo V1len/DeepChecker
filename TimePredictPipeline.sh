@@ -5,4 +5,4 @@
 /home/zjy/.conda/envs/zjy/bin/python /mnt/hd0/DeepChecker_code/TimePredict.py
 /home/zjy/.conda/envs/zjy/bin/python /mnt/hd0/DeepChecker_code/TimeAddPrediction.py
 /home/zjy/.conda/envs/zjy/bin/python /mnt/hd0/DeepChecker_code/DrawTime.py
-# /home/zjy/.conda/envs/zjy/bin/python /mnt/hd0/DeepChecker_code/DrawTimeDotFigure.py
+/home/zjy/.conda/envs/zjy/bin/python /mnt/hd0/DeepChecker_code/DrawTimeDotFigure.py

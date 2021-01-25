@@ -25,10 +25,26 @@ if __name__ == '__main__':
             statistic_vec = np.log(np.array(vec_list).sum(axis=0) + 1.0).tolist()
             # print(statistic_vec)
             # plt.subplot(2,2,index + 1)
-            plt.bar(range(len(statistic_vec)),statistic_vec)
-            plt.title(method)
-            plt.xlabel('Features')
-            plt.ylabel('ln(# Total)')
+            if i == 0:
+                width = 0.3
+                x = range(0,len(vec_list[0]),1)
+            elif i == 1:
+                width = 0.5
+                x = range(0,len(vec_list[0]),1)
+            else:
+                width = 0.5
+                x = range(0,len(vec_list[0]),10)
+            plt.bar(range(len(statistic_vec)),statistic_vec, width=width, color="k")
+            #plt.title(method)
+            plt.xticks(x)
+            # plt.xlabel('Features')
+            # plt.ylabel('ln(# Total)')
+            if i == 0:
+                plt.subplots_adjust(left=0.065, right=0.99, top=0.99, bottom=0.05)
+            elif i == 1:
+                plt.subplots_adjust(left=0.05, right=0.99, top=0.99, bottom=0.05)
+            else:
+                plt.subplots_adjust(left=0.05, right=0.99, top=0.99, bottom=0.05)
             plt.savefig(temp_path)
             plt.show()
 

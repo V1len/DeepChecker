@@ -1,10 +1,7 @@
 import utils
 import csv
 
-if __name__ == '__main__':
-    classify_basic_data_path = utils.classify_basic_data_path
-    predict_data_path = classify_basic_data_path + "classify_predict_data.csv"
-
+def CalculateWeightedLoss(predict_data_path):
     with open(predict_data_path, newline='') as csvfile:
         data = list(csv.reader(csvfile))
     data = data[1:]
@@ -21,6 +18,21 @@ if __name__ == '__main__':
             else:
                 sum_weighted_loss += (float(predict_time)- float(truth_time))
         print(sum_weighted_loss / test_num)
+
+
+if __name__ == '__main__':
+    classify_basic_data_path = utils.classify_basic_data_path
+    predict_data_path = classify_basic_data_path + "classify_predict_data.csv"
+    train_predict_data_path = classify_basic_data_path + "classify_train_predict_data.csv"
+
+    print("train")
+    CalculateWeightedLoss(train_predict_data_path)
+    print("test")
+    CalculateWeightedLoss(predict_data_path)
+    
+
+
+
     
 
                 

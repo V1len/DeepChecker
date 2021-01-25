@@ -14,7 +14,7 @@ encoding_layer_list = ["0-depth Encoding", "1-depth Encoding", "2-depth Encoding
 choose_top_method_number = 1
 sum_method_number = len(method_list)
 
-date = "2021-1-20"
+date = "2021-1-24"
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
 if not os.path.exists(root_path):
     os.mkdir(root_path)

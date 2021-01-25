@@ -68,7 +68,7 @@ if __name__ == '__main__':
     GenerateLabel(train_data_path, train_name_list_path, train_label_dic_path)
     GenerateLabel(test_data_path, test_name_list_path, test_label_dic_path)
 
-    # Statistic(train_label_dic_path, test_label_dic_path)
+    Statistic(train_label_dic_path, test_label_dic_path)
 
     StatisticSamples(test_label_dic_path, statistic_name_dic_path)
  

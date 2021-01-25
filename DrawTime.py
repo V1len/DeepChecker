@@ -56,7 +56,7 @@ if __name__ == '__main__':
         plt.figure()
         plt.title(method)
         plt.xlabel('Sum Time (s)')
-        plt.ylabel('Solved Number')
+        plt.ylabel('# Solved Number')
         
         for i in range(len(time_predict_label_list)):
             label = time_predict_label_list[i]
@@ -67,11 +67,11 @@ if __name__ == '__main__':
             utils.WriteJson(predict_name_list, temp_name_sort_path)
             predict_solved_sum_time_list, predict_solved_number_list = GetFigData(predict_name_list, method, test_time_message, test_timeout_message)
             if label == "0-depth Encoding":
-                color = "#FEB64D"
+                color = "#9dc6e0"
             elif label == "1-depth Encoding":
-                color = "#FA816D"
+                color = "#6996b3"
             elif label == "2-depth Encoding":
-                color = "#D15B7F"
+                color = "#004c6d"
             plt.plot(predict_solved_sum_time_list, predict_solved_number_list, label=label, color=color)
 
         test_time_list = []
@@ -92,6 +92,7 @@ if __name__ == '__main__':
         plt.plot(random_sum_time_list, random_solved_number_list, label="random", color="#C0C0C0", linestyle="--")
 
         plt.legend()
+        plt.subplots_adjust(left=0.065, right=0.99, top=0.95, bottom=0.05)
         plt.savefig(save_path)
         plt.show()
         
