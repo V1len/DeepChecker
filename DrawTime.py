@@ -54,9 +54,9 @@ if __name__ == '__main__':
     for method in utils.method_list:
         save_path = utils.time_result_path + method + "_time_predict.pdf"
         plt.figure()
-        plt.title(method)
-        plt.xlabel('Sum Time (s)')
-        plt.ylabel('# Solved Number')
+        plt.title(method, size=17)
+        # plt.xlabel('Sum Time (s)', size=25)
+        # plt.ylabel('# Solved Number', size=25)
         
         for i in range(len(time_predict_label_list)):
             label = time_predict_label_list[i]
@@ -81,7 +81,7 @@ if __name__ == '__main__':
         truth_name_sort_path = utils.time_basic_data_path + method + "_name_sort_truth.json"
         utils.WriteJson(ground_truth_name_list, truth_name_sort_path)      
         ground_truth_sum_time_list, ground_truth_solved_number_list = GetFigData(ground_truth_name_list, method, test_time_message, test_timeout_message)
-        plt.plot(ground_truth_sum_time_list, ground_truth_solved_number_list, label="Ground Truth", color="#C0C0C0", linestyle=':')
+        plt.plot(ground_truth_sum_time_list, ground_truth_solved_number_list, label="Ground Truth", color="#C3C3C3", linestyle=':')
 
         random_index_list = list(range(len(test_name_list)))
         random.shuffle(random_index_list)
@@ -89,10 +89,28 @@ if __name__ == '__main__':
         for index in random_index_list:
             random_name_list.append(test_name_list[index])
         random_sum_time_list, random_solved_number_list = GetFigData(random_name_list, method, test_time_message, test_timeout_message)
-        plt.plot(random_sum_time_list, random_solved_number_list, label="random", color="#C0C0C0", linestyle="--")
+        plt.plot(random_sum_time_list, random_solved_number_list, label="random", color="#A4A4A4", linestyle="--")
 
         plt.legend()
-        plt.subplots_adjust(left=0.065, right=0.99, top=0.95, bottom=0.05)
+        if method == "pdr":
+            y = range(0, 1000, 200)
+            plt.xticks(range(0, 180000, 36000), range(0, 50, 10), size=17)
+            plt.yticks(y, size=17)
+        elif method == "dprove":
+            y = range(0, 1000, 200)
+            plt.xticks(range(0, 360000, 72000), range(0, 100, 20), size=17)
+            plt.yticks(y, size=17)
+        elif method == "IC3":
+            y = range(0, 700, 150)
+            plt.xticks(range(0, 864000, 144000), range(0, 240, 40), size=17)
+            plt.yticks(y, size=17)
+        elif method == "iimc":
+            x = range(0, 300000, 120000)
+            y = range(0, 1000, 200)
+            plt.xticks(range(0, 324000, 54000), range(0, 90, 15), size=17)
+            plt.yticks(y, size=17)
+        
+        plt.subplots_adjust(left=0.09, right=0.99, top=0.94, bottom=0.07)
         plt.savefig(save_path)
         plt.show()
         

@@ -25,16 +25,16 @@ if __name__ == '__main__':
         xaxis = []
         for name in truth_name_sort:
             xaxis.append(predict_name_sort.index(name))
-        plt.scatter(xaxis, yaxis, s=3)
+        plt.scatter(xaxis, yaxis, s=7, color="k")
         # temp_ax.set_xscale('linear')
         # temp_ax.set_yscale('linear')
-        plt.title(method)
+        plt.title(method, size=25)
 
         length_list = range(0, len(yaxis), 200)
-        plt.xticks(length_list)
-        plt.yticks(length_list)
+        plt.xticks(length_list, size=25)
+        plt.yticks(length_list, size=25)
         
-        plt.subplots_adjust(left=0.065, right=0.99, top=0.95, bottom=0.05)
+        plt.subplots_adjust(left=0.12, right=0.99, top=0.92, bottom=0.1)
         plt.savefig(save_path)
 
 

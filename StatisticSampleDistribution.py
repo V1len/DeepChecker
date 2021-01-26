@@ -30,21 +30,23 @@ if __name__ == '__main__':
                 x = range(0,len(vec_list[0]),1)
             elif i == 1:
                 width = 0.5
-                x = range(0,len(vec_list[0]),1)
+                x = range(0,len(vec_list[0]),4)
             else:
                 width = 0.5
-                x = range(0,len(vec_list[0]),10)
+                x = range(0,len(vec_list[0]),30)
             plt.bar(range(len(statistic_vec)),statistic_vec, width=width, color="k")
             #plt.title(method)
-            plt.xticks(x)
+            y = range(0, 17, 4)
+            plt.xticks(x, size=33)
+            plt.yticks(y, size=33)
             # plt.xlabel('Features')
             # plt.ylabel('ln(# Total)')
             if i == 0:
-                plt.subplots_adjust(left=0.065, right=0.99, top=0.99, bottom=0.05)
+                plt.subplots_adjust(left=0.1, right=0.99, top=0.96, bottom=0.10)
             elif i == 1:
-                plt.subplots_adjust(left=0.05, right=0.99, top=0.99, bottom=0.05)
+                plt.subplots_adjust(left=0.1, right=0.99, top=0.96, bottom=0.10)
             else:
-                plt.subplots_adjust(left=0.05, right=0.99, top=0.99, bottom=0.05)
+                plt.subplots_adjust(left=0.1, right=0.99, top=0.96, bottom=0.10)
             plt.savefig(temp_path)
             plt.show()
 

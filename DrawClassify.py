@@ -73,7 +73,7 @@ if __name__ == '__main__':
     plt.xlabel('Time (s)')
     plt.ylabel('# Solved Benchmarks')
     plt.legend()
-    plt.subplots_adjust(left=0.06, right=0.992, top=0.99, bottom=0.05)
+    plt.subplots_adjust(left=0.09, right=0.992, top=0.99, bottom=0.09)
     plt.savefig(save_path)
     plt.show()
 

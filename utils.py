@@ -15,7 +15,9 @@ choose_top_method_number_1 = 1
 choose_top_method_number_2 = 2
 sum_method_number = len(method_list)
 
+# date = "2021-1-26-best-classify"
 date = "2021-1-26"
+
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
 if not os.path.exists(root_path):
     os.mkdir(root_path)
