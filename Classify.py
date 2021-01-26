@@ -24,7 +24,7 @@ def GeneratePredictResult(test_name_list, predict_label_list, classify_predict_p
 
 
     method_list = utils.method_list
-    choose_top_method_number = utils.choose_top_method_number
+    choose_top_method_number = utils.choose_top_method_number_1
     for i in range(choose_top_method_number):
         top_i_method_dic = {}
         for j in range(len(test_name_list)):
@@ -35,15 +35,14 @@ def GeneratePredictResult(test_name_list, predict_label_list, classify_predict_p
 
     return classify_predict
 
-def GetAcc(predict_label_list, test_label_list):
-    choose_top_method_number = utils.choose_top_method_number
+def GetAcc(predict_label_list, test_label_list, choose_top_method_number):
     sum_acc = 0
     for i in range(choose_top_method_number):
         acc = (predict_label_list[:, i] == test_label_list).sum() / len(test_label_list)
         sum_acc += acc
     return sum_acc
     
-def RandomForest(embedded_dir, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path,
+def RandomForest(layer, embedded_dir, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path,
                  classify_train_predict_path, model_path, importance_path, 
                  max_depth, max_leaf_nodes, min_samples_split=2, min_samples_leaf=1):
     train_vec_list = utils.GetVecList(embedded_dir, train_name_list)
@@ -61,19 +60,21 @@ def RandomForest(embedded_dir, train_name_list, test_name_list, train_label_list
     classifier = model.fit(train_vec_list, train_label_list)
     utils.Save_pkl(classifier, model_path)
     
-    train_predictions = classifier.predict_proba(train_vec_list)
-    train_predict_label_list = np.argsort(-train_predictions, axis=1)
-    sum_acc = GetAcc(train_predict_label_list, train_label_list)
-    print("train")
-    print(sum_acc)
-    classify_train_predict = GeneratePredictResult(train_name_list, train_predict_label_list, classify_train_predict_path)
+    # train_predictions = classifier.predict_proba(train_vec_list)
+    # train_predict_label_list = np.argsort(-train_predictions, axis=1)
+    # sum_acc = GetAcc(train_predict_label_list, train_label_list)
+    # print("train")
+    # print(sum_acc)
+    # classify_train_predict = GeneratePredictResult(train_name_list, train_predict_label_list, classify_train_predict_path)
 
     predictions = classifier.predict_proba(test_vec_list)
     predict_label_list = np.argsort(-predictions, axis=1)
     importance = model.feature_importances_
     utils.WriteJson(importance.tolist(), importance_path)
-    sum_acc = GetAcc(predict_label_list, test_label_list)
-    print("test")
+    print("layer " + layer)
+    sum_acc = GetAcc(predict_label_list, test_label_list, utils.choose_top_method_number_1)
+    print(sum_acc)
+    sum_acc = GetAcc(predict_label_list, test_label_list, utils.choose_top_method_number_2)
     print(sum_acc)
     classify_predict = GeneratePredictResult(test_name_list, predict_label_list, classify_predict_path)
     Statistic(test_name_list, classify_predict)
@@ -141,19 +142,22 @@ if __name__ == '__main__':
     importance_path_1 = importance_message_path + "importance_1.json"
     importance_path_2 = importance_message_path + "importance_2.json"
 
+    layer_0 = "0"
+    layer_1 = "1"
+    layer_2 = "2"
+
     if use_all_methods:
-        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, 
+        RandomForest(layer_0, embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, 
                     classify_predict_path_0, classify_train_predict_path_0, classify_model_path_0, importance_path_0, 
                     max_depth=None, max_leaf_nodes=40, min_samples_split=40, min_samples_leaf=1)
-        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, 
+        RandomForest(layer_1, embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, 
                     classify_predict_path_1, classify_train_predict_path_1, classify_model_path_1, importance_path_1, 
                     max_depth=None, max_leaf_nodes=80, min_samples_split=20, min_samples_leaf=1)
-        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, 
+        RandomForest(layer_2, embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, 
                     classify_predict_path_2, classify_train_predict_path_2, classify_model_path_2, importance_path_2, 
                     max_depth=None, max_leaf_nodes=120, min_samples_split=10, min_samples_leaf=1)
     else:
-        RandomForest(embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path_0, classify_train_predict_path_0, classify_model_path_0, importance_path_0, max_depth=3, max_leaf_nodes=30, min_samples_split=3, min_samples_leaf=1)
-        RandomForest(embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path_1, classify_train_predict_path_1, classify_model_path_1, importance_path_1, max_depth=4, max_leaf_nodes=30, min_samples_split=3, min_samples_leaf=1)
-        RandomForest(embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path_2, classify_train_predict_path_2, classify_model_path_2, importance_path_2, max_depth=None, max_leaf_nodes=30, min_samples_split=3, min_samples_leaf=1)
-
-
+        RandomForest(layer_0, embedded_dir_0, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path_0, classify_train_predict_path_0, classify_model_path_0, importance_path_0, max_depth=3, max_leaf_nodes=30, min_samples_split=3, min_samples_leaf=1)
+        RandomForest(layer_1, embedded_dir_1, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path_1, classify_train_predict_path_1, classify_model_path_1, importance_path_1, max_depth=4, max_leaf_nodes=30, min_samples_split=3, min_samples_leaf=1)
+        RandomForest(layer_2, embedded_dir_2, train_name_list, test_name_list, train_label_list, test_label_list, classify_predict_path_2, classify_train_predict_path_2, classify_model_path_2, importance_path_2, max_depth=None, max_leaf_nodes=30, min_samples_split=3, min_samples_leaf=1)
+ 

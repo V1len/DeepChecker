@@ -15,11 +15,11 @@ if __name__ == '__main__':
     method_list.append("IC3ref")
     method_list.append("Ground Truth")
     method_list.append("Random")
-    index_list = [7, 6, 5, 2, 3, 1, 4, 8, 9]
+    index_list = [7, 6, 5, 2, 3, 1, 4, 11, 12]
 
     classify_basic_data_path = utils.classify_basic_data_path
     predict_data_path = classify_basic_data_path + "classify_predict_data.csv"
-    save_path = utils.classify_result_path + "classify.pdf"
+    save_path = utils.classify_result_path + "Classify.pdf"
 
     maxtime = 3600
     with open(predict_data_path, newline='') as csvfile:
@@ -42,15 +42,10 @@ if __name__ == '__main__':
             method = utils.NameMap(method)
         if method == "2-depth Encoding":
             color = "#004c6d"
-            # color = "#004e70"
         elif method == "1-depth Encoding":
             color = "#6996b3"
-            # color = "#5886a5"
-            # color = "#0072b3"
         elif method == "0-depth Encoding":
-            # color = "#c1e7ff"
             color = "#9dc6e0"
-            # color = "#0096fa"
         elif method == "ABC-pdr":
             color = "#D68910"
         elif method == "IImc":
@@ -61,7 +56,6 @@ if __name__ == '__main__':
             color = "#58508d"
         elif method == "Ground Truth":
             color = "#C3C3C3"
-            # color = "#C0C0C0"
         elif method == "Random":
             color = "#A4A4A4"
         else:

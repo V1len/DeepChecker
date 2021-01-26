@@ -11,10 +11,11 @@ else:
 
 encoding_layer_list = ["0-depth Encoding", "1-depth Encoding", "2-depth Encoding"]
 
-choose_top_method_number = 1
+choose_top_method_number_1 = 1
+choose_top_method_number_2 = 2
 sum_method_number = len(method_list)
 
-date = "2021-1-24"
+date = "2021-1-26"
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
 if not os.path.exists(root_path):
     os.mkdir(root_path)
@@ -62,7 +63,8 @@ for temp_path in path_list:
 # AVY_dprove_path = "/mnt/hd0/DeepChecker/DataForNet/2021-1-10/data_clean.json"
 AVY_dprove_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/AVY_dprove_clean.json"
 pdr_IC3_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/pdr_IC3_clean.json"
-iimc_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/iimc_clean.json"
+# iimc_path = "/mnt/hd0/DeepChecker/dataset/2020-1-18/iimc_clean.json"
+iimc_path = "/mnt/hd0/DeepChecker/dataset/2020-1-26/clean_iimc.json"
 others_path = "/mnt/hd0/DeepChecker/dataset/2020-1-12/others.json"
 hwmcc_clean_path = "/mnt/hd0/DeepChecker/dataset/2020-1-22/hwmcc_clean.json"
 
