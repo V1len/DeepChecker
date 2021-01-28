@@ -31,7 +31,8 @@ def ClassifyAddCol(data, name_list, classify_predict_path, choose_top_method_num
     return data
 
 def ClassifyAddPrediction(data_path, name_list_path, predict_data_path, 
-                        classify_predict_path_0, classify_predict_path_1, classify_predict_path_2):
+                        classify_predict_path_0, classify_predict_path_1, classify_predict_path_2,
+                        encoding_time_path_0, encoding_time_path_1, encoding_time_path_2):
     with open(data_path, newline='') as csvfile:
         data = list(csv.reader(csvfile))
 
@@ -82,6 +83,20 @@ def ClassifyAddPrediction(data_path, name_list_path, predict_data_path,
     print("Random Acc top2")
     print(correct_num / len(data))
 
+    encoding_time_path_list = [encoding_time_path_0, encoding_time_path_1, encoding_time_path_2]
+    for i in range(len(encoding_time_path_list)):
+        encoding_time_path = encoding_time_path_list[i]
+        encoding_time_dic = utils.ReadJson(encoding_time_path)
+        for index in range(len(data)):
+            name = data[index][0].split(".aig")[0]
+            encoding_time = encoding_time_dic[name]
+            predict_time = data[index][i + 5]            
+            if predict_time != "timeout" and predict_time != "failed" and predict_time != "0.0" and predict_time != "0":
+                total_time = str(encoding_time + float(predict_time))
+            else:
+                total_time = "timeout"
+            data[index].append(total_time)
+
 
     title = "filename"
     for method in method_list:
@@ -90,8 +105,11 @@ def ClassifyAddPrediction(data_path, name_list_path, predict_data_path,
         title = title + "," + "top1_" + encoding_layer
     for encoding_layer in utils.encoding_layer_list:
         title = title + "," + "top2_" + encoding_layer
+    title = title + ",Ground Truth,Random Top1,Random Top2"
+    for encoding_layer in utils.encoding_layer_list:
+        title = title + "," + "AddEncoding_" + encoding_layer
     with open(predict_data_path, "w") as writer:
-        writer.write(title + ",Ground Truth,Random Top1,Random Top2\n")
+        writer.write(title + "\n")
         for line in data:
             writer.write(",".join(line) + "\n")
 
@@ -114,11 +132,16 @@ if __name__ == '__main__':
     train_data_path = classify_basic_data_path + "train_data.csv"
     train_predict_data_path = classify_basic_data_path + "classify_train_predict_data.csv"
 
+    encoding_time_path_0 = utils.classify_basic_data_path + "encoding_time_0.json"
+    encoding_time_path_1 = utils.classify_basic_data_path + "encoding_time_1.json"
+    encoding_time_path_2 = utils.classify_basic_data_path + "encoding_time_2.json"
+
     # print("train")
     # ClassifyAddPrediction(train_data_path, train_name_list_path, train_predict_data_path, 
     #                         classify_train_predict_path_0, classify_train_predict_path_1, classify_train_predict_path_2)
     # print("test")
     ClassifyAddPrediction(test_data_path, test_name_list_path, predict_data_path, 
-                            classify_predict_path_0, classify_predict_path_1, classify_predict_path_2)
+                            classify_predict_path_0, classify_predict_path_1, classify_predict_path_2,
+                            encoding_time_path_0, encoding_time_path_1, encoding_time_path_2)
 
 

@@ -15,8 +15,9 @@ choose_top_method_number_1 = 1
 choose_top_method_number_2 = 2
 sum_method_number = len(method_list)
 
-# date = "2021-1-26-best-classify"
-date = "2021-1-26"
+date = "2021-1-26-best-classify"
+# date = "2021-1-26-time"
+# date = "2021-1-27"
 
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
 if not os.path.exists(root_path):
@@ -73,6 +74,13 @@ hwmcc_clean_path = "/mnt/hd0/DeepChecker/dataset/2020-1-22/hwmcc_clean.json"
 # iimc_benchmark_path = "/mnt/hd0/DeepChecker/dataset/2021-1-8/iimc_benchmark.json"
 iimc_benchmark_path = "/mnt/hd0/DeepChecker/dataset/2021-1-19/iimc_benchmark.json"
 new_format_json_path = "/mnt/hd0/DeepChecker/new_format.json"
+
+encoding_log_path_0 = "/mnt/hd0/DeepChecker/StatisticAvgEncodingTime/embedding_0.log"
+encoding_log_path_1 = "/mnt/hd0/DeepChecker/StatisticAvgEncodingTime/embedding_1.log"
+encoding_log_path_2 = "/mnt/hd0/DeepChecker/StatisticAvgEncodingTime/embedding_2.log"
+encoding_aig_path = "/mnt/hd0/DeepChecker/StatisticAvgEncodingTime/networks/"
+encoding_aag_path = "/mnt/hd0/DeepChecker/networks_aag/"
+
 
 embedding_date_0 = "2021-1-2_v0.1"
 embedding_date_1 = "2020-12-24_v1.1"

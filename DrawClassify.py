@@ -15,11 +15,12 @@ if __name__ == '__main__':
     method_list.append("IC3ref")
     method_list.append("Ground Truth")
     method_list.append("Random")
-    index_list = [7, 6, 5, 2, 3, 1, 4, 11, 12]
+    # index_list = [7, 6, 5, 2, 3, 1, 4, 11, 12]
+    index_list = [16, 15, 14, 2, 3, 1, 4, 11, 12]
 
     classify_basic_data_path = utils.classify_basic_data_path
     predict_data_path = classify_basic_data_path + "classify_predict_data.csv"
-    save_path = utils.classify_result_path + "Classify.pdf"
+    save_path = utils.classify_result_path + "AddEncodingTime.pdf"
 
     maxtime = 3600
     with open(predict_data_path, newline='') as csvfile:
@@ -57,7 +58,7 @@ if __name__ == '__main__':
         elif method == "Ground Truth":
             color = "#C3C3C3"
         elif method == "Random":
-            color = "#A4A4A4"
+            color = "#000000"
         else:
             color = None
         

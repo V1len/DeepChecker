@@ -54,7 +54,7 @@ if __name__ == '__main__':
     for method in utils.method_list:
         save_path = utils.time_result_path + method + "_time_predict.pdf"
         plt.figure()
-        plt.title(method, size=17)
+        plt.title(utils.NameMap(method), size=17)
         # plt.xlabel('Sum Time (s)', size=25)
         # plt.ylabel('# Solved Number', size=25)
         
@@ -68,10 +68,14 @@ if __name__ == '__main__':
             predict_solved_sum_time_list, predict_solved_number_list = GetFigData(predict_name_list, method, test_time_message, test_timeout_message)
             if label == "0-depth Encoding":
                 color = "#9dc6e0"
+                color = "#a6a6a6"
+
             elif label == "1-depth Encoding":
                 color = "#6996b3"
+                color = "#505050"                
             elif label == "2-depth Encoding":
-                color = "#004c6d"
+                # color = "#004c6d"
+                color = "#000000"
             plt.plot(predict_solved_sum_time_list, predict_solved_number_list, label=label, color=color)
 
         test_time_list = []
@@ -89,7 +93,7 @@ if __name__ == '__main__':
         for index in random_index_list:
             random_name_list.append(test_name_list[index])
         random_sum_time_list, random_solved_number_list = GetFigData(random_name_list, method, test_time_message, test_timeout_message)
-        plt.plot(random_sum_time_list, random_solved_number_list, label="random", color="#A4A4A4", linestyle="--")
+        plt.plot(random_sum_time_list, random_solved_number_list, label="random", color="#000000", linestyle="--")
 
         plt.legend()
         if method == "pdr":
