@@ -3,8 +3,7 @@ import csv
 import utils
 import copy
 
-if __name__ == '__main__':
-    root_path = utils.root_path
+def Draw(index_list, predict_data_path, save_path):
     method_list = []
     method_list.append("2-depth Encoding")
     method_list.append("1-depth Encoding")
@@ -15,12 +14,6 @@ if __name__ == '__main__':
     method_list.append("IC3ref")
     method_list.append("Ground Truth")
     method_list.append("Random")
-    # index_list = [7, 6, 5, 2, 3, 1, 4, 11, 12]
-    index_list = [16, 15, 14, 2, 3, 1, 4, 11, 12]
-
-    classify_basic_data_path = utils.classify_basic_data_path
-    predict_data_path = classify_basic_data_path + "classify_predict_data.csv"
-    save_path = utils.classify_result_path + "AddEncodingTime.pdf"
 
     maxtime = 3600
     with open(predict_data_path, newline='') as csvfile:
@@ -77,6 +70,22 @@ if __name__ == '__main__':
     plt.subplots_adjust(left=0.09, right=0.992, top=0.99, bottom=0.09)
     plt.savefig(save_path)
     plt.show()
+
+if __name__ == '__main__':
+    root_path = utils.root_path
+    
+    index_list = [7, 6, 5, 2, 3, 1, 4, 11, 12]
+    index_with_encoding_list = [16, 15, 14, 2, 3, 1, 4, 11, 12]
+
+    classify_basic_data_path = utils.classify_basic_data_path
+    predict_data_path = classify_basic_data_path + "classify_predict_data.csv"
+    predict_data_with_encoding_path = classify_basic_data_path + "classify_predict_data_with_encoding.csv"
+
+    save_path = utils.classify_result_path + "Classify.pdf"
+    save_with_encoding_path = utils.classify_result_path + "ClassifyWithEncodingTime.pdf"
+    
+    Draw(index_list, predict_data_path, save_path)
+    Draw(index_with_encoding_list, predict_data_with_encoding_path, save_with_encoding_path)
 
 
 
