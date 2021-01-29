@@ -29,14 +29,14 @@ if __name__ == '__main__':
         plt.scatter(xaxis, yaxis, s=7, color="k")
         # temp_ax.set_xscale('linear')
         # temp_ax.set_yscale('linear')
-        plt.title(utils.NameMap(method), size=25)
+        plt.title(utils.NameMap(method), size=30)
 
         plt.xlim(0,824)
         plt.ylim(0,824)
-        plt.xticks(range(0, len(yaxis), 200), ["0     ", "200", "400", "600", "800"], size=25)
-        plt.yticks(range(200, len(yaxis), 200), size=25)
+        plt.xticks(range(0, len(yaxis), 200), ["0     ", "200", "400", "600", "800"], size=30)
+        plt.yticks(range(200, len(yaxis), 200), size=30)
         
-        plt.subplots_adjust(left=0.12, right=0.97, top=0.92, bottom=0.1)
+        plt.subplots_adjust(left=0.14, right=0.95, top=0.91, bottom=0.1)
         plt.savefig(save_path)
 
 

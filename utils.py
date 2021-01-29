@@ -15,9 +15,9 @@ choose_top_method_number_1 = 1
 choose_top_method_number_2 = 2
 sum_method_number = len(method_list)
 
-# date = "2021-1-26-best-classify"
+date = "2021-1-26-best-classify"
 # date = "2021-1-26-time"
-date = "2021-1-27"
+# date = "2021-1-29"
 
 root_path = "/mnt/hd0/DeepChecker/DataForNet/" + date + "/"
 if not os.path.exists(root_path):
@@ -84,7 +84,10 @@ encoding_aag_path = "/mnt/hd0/DeepChecker/networks_aag/"
 
 embedding_date_0 = "2021-1-2_v0.1"
 embedding_date_1 = "2020-12-24_v1.1"
-embedding_date_2 = "2021-1-2_v2.2"
+# embedding_date_2 = "2021-1-2_v2.2"
+
+embedding_date_2 = "2020-1-28_v2.2"
+
 # embedding_date_0 = "2020-12-11_v0"
 # embedding_date_1 = "2020-12-24_v1.1"
 # embedding_date_2 = "2020-12-24_v2.1"

@@ -35,10 +35,10 @@ if __name__ == '__main__':
                 width = 0.5
                 x = range(0,len(vec_list[0]),30)
             plt.bar(range(len(statistic_vec)),statistic_vec, width=width, color="k")
-            plt.title(utils.NameMap(method), size=33)
+            plt.title(utils.NameMap(method), size=30)
             y = range(0, 17, 4)
-            plt.xticks(x, size=33)
-            plt.yticks(y, size=33)
+            plt.xticks(x, size=30)
+            plt.yticks(y, size=30)
             # plt.xlabel('Features')
             # plt.ylabel('ln(# Total)')
             if i == 0:

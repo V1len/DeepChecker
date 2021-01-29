@@ -95,7 +95,7 @@ if __name__ == '__main__':
         random_sum_time_list, random_solved_number_list = GetFigData(random_name_list, method, test_time_message, test_timeout_message)
         plt.plot(random_sum_time_list, random_solved_number_list, label="random", color="#000000", linestyle="--")
 
-        plt.legend()
+        plt.legend(prop = {'size':13})
         if method == "pdr":
             y = range(0, 1000, 200)
             plt.xticks(range(0, 180000, 36000), range(0, 50, 10), size=17)
